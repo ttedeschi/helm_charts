@@ -1,0 +1,78 @@
+
+{{- if .Values.cvmfs.enabled -}}
+# TODO configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default-local
+data:
+  default.local: {{ .Values.cvmfs.defaultLocalConfig }}
+  # other file: put here
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cvmfs
+  labels:
+    app: cvmfs
+spec:
+  template:
+    metadata:
+      labels:
+        app: cvmfs
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - cvmfs
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: condor
+                operator: NotIn
+                values:
+                - ccb
+                - schedd
+            topologyKey: kubernetes.io/hostname
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+      containers:
+      - name: cvmfs
+        image: "{{ .Values.cvmfs.image }}"
+        env:
+        - name: REPO_LIST
+          value:   "{{ .Values.cvmfs.REPO_LIST }}"
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+        volumeMounts:
+        - mountPath: "/cvmfs"
+          name: cvmfs
+          mountPropagation: Bidirectional
+        - mountPath: "/etc/cvmfs/"
+          name: default-local
+      restartPolicy: Always
+      volumes:
+      - name: cvmfs
+        hostPath:
+          path: "/cvmfs"
+          type: Directory
+      - name: default-local
+        configMap: 
+          name: default-local
+        # TODO CONFIGMAP
+  selector:
+    matchLabels:
+      app: cvmfs
+  replicas: 1
+{{- end }}

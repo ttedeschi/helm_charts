@@ -1,0 +1,48 @@
+# Default values for htcondor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+CONDOR_HOST:
+CCB_HOST:
+PROXY_CACHE:
+PROXY_CACHE_Port: 30080
+NETWORK_INTERFACE:
+
+SLOT_TYPE_1: cpus=1, mem=2000
+
+LOWPORT: 31024
+HIGHPORT: 32048
+
+spool_size: 5Gi
+spool_size_claim: 4Gi
+spool_host_path: /tmp/
+
+condor_image: dodasts/htcondor:fermi
+
+nfs:
+  enabled: false
+  size: 1Mi
+  server: DUMMY
+  path: "/"
+
+cvmfs:
+  enabled: false
+  image: cloudpg/cvmfs:k8s
+  REPO_LIST: cms.cern.ch oasis.cern.ch
+  defaultLocalConfig: |-
+    property.1=value-1
+    property.2=value-2
+    property.3=value-3
+
+IAM_TOKEN:
+IAM_CLIENT_ID:
+IAM_CLIENT_SECRET:
+IAM_SCIM_CLIENT_ID:
+IAM_SCIM_SECRET:
+IAM_MAP_GROUP:
+PROXY_AUDIENCE: "https://dodas-tts.cloud.cnaf.infn.it"
+PROXY_TTS: "https://dodas-tts.cloud.cnaf.infn.it"
+PROXY_IAM_ENDPOINT: "https://dodas-iam.cloud.cnaf.infn.it/"
+PROXY_CREDENTIAL_ENDPOINT: "https://dodas-tts.cloud.cnaf.infn.it/api/v2/iam/credential"
+
+tts_image: "dodasts/ttscache:v1.1.0-dodas"

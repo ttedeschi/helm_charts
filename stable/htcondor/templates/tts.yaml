@@ -1,0 +1,92 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tts-svc
+spec:
+  type: NodePort
+  selector:
+    app: tts
+  ports:
+  - protocol: TCP
+    name: tts
+    port: 8080
+    targetPort: 80
+    nodePort: {{ .Values.PROXY_CACHE_Port }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tts-pod
+  labels:
+    app: tts
+spec:
+  template:
+    metadata:
+      labels:
+        app: tts
+    spec: 
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: condor
+                operator: In
+                values:
+                - ccb
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+      containers: 
+      - name: tts-cache
+        imagePullPolicy: Always
+        env: 
+        - name: IAM_TOKEN
+          value:  "{{ .Values.IAM_TOKEN }}"
+        - name: IAM_CLIENT_ID
+          value: "{{ .Values.IAM_CLIENT_ID}}"
+        - name: IAM_CLIENT_SECRET
+          value: "{{ .Values.IAM_CLIENT_SECRET}}"
+        - name: IAM_MAP_CLIENT_ID
+          value: "{{ .Values.IAM_SCIM_CLIENT_ID}}"
+        - name: IAM_MAP_CLIENT_SECRET
+          value: "{{ .Values.IAM_SCIM_SECRET}}"
+        - name: IAM_MAP_GROUP
+          value: "{{ .Values.IAM_MAP_GROUP}}"
+        - name: PROXY_AUDIENCE
+          value:  "{{ .Values.PROXY_AUDIENCE}}"
+        - name: PROXY_TTS
+          value: "{{ .Values.PROXY_TTS}}"
+        - name: PROXY_IAM_ENDPOINT
+          value:  "{{ .Values.PROXY_IAM_ENDPOINT}}"
+        - name: PROXY_CREDENTIAL_ENDPOINT
+          value: "{{ .Values.PROXY_CREDENTIAL_ENDPOINT}}"
+        - name: PROXY_LOCAL_CACHE_EXPIRATION_TIME
+          value: "86400"
+        - name: PROXY_LOCK_FILE_AGE
+          value: "20"
+        - name: PROXY_CACHE_DIR
+          value: "/tmp"
+        image:  "{{ .Values.tts_image}}"
+        livenessProbe:
+          exec:
+            command:
+            - voms-proxy-info
+            - --file
+            - /tmp/userproxy.pem
+            - --valid
+          initialDelaySeconds: 300
+          periodSeconds: 600
+        volumeMounts:
+        - mountPath: "/tmp"
+          name: temp
+      volumes:
+      - name: temp
+        hostPath:
+          path: /tmp
+  selector:
+    matchLabels:
+      app: tts 
+
+  replicas: 1
