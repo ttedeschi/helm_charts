@@ -15,5 +15,5 @@ help:
 travis:
 	./scripts/build_travis.sh
 
-build-helm:
+push-helm-repo:
 	./scripts/build_charts.sh
