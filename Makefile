@@ -6,11 +6,14 @@ CURRENT_BRANCH = "master"
 
 .PHONY: build-helm
 
-all: help
+all: build-helm
 
 help:
 	@echo "Available commands:\n"
 	@echo "- build-helm			: "
+
+travis:
+	./scripts/build_travis.sh
 
 build-helm:
 	./scripts/build_charts.sh
