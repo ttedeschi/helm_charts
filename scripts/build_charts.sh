@@ -31,10 +31,10 @@ for chart in $chart_list; do
 done
 
 mv ./index.yaml ${BUILD_DIR}/
-git checkout -b gh-pages
+git checkout gh-pages
 cp ${BUILD_DIR}/*.tgz .
 cp ${BUILD_DIR}/index.yaml .
 git add index.yaml *.tgz
-git commit -m ${COMMIT_MSG}
+git commit -m "${COMMIT_MSG}"
 git push origin gh-pages
 git checkout ${CURRENT_BRANCH}
