@@ -1,0 +1,32 @@
+Spark:
+    Path: /opt/spark
+
+externalIP:
+    enabled: true
+    ip: 192.168.65.3 
+
+Master:
+    Name: master
+    Image: cloudpg/spark-py
+    ImageTag: dodas-2.4.3-bigdl
+    Replicas: 1
+    Component: spark-master
+    Cpu: 100m
+    Memory: 1024Mi
+    ServicePort: 7077
+    ContainerPort: 7077
+    # Set Master JVM memory. Default 1g
+    # DaemonMemory: 1g
+    ServiceType: NodePort
+    Jupyter:
+        NodePort: 30888
+
+WebUi:
+  Name: webui
+  ServicePort: 8080
+  ContainerPort: 8080
+  NodePort: 30808
+  ServiceType: NodePort
+
+hostPath: 
+    path: /tmp
