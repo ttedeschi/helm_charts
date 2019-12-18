@@ -1,0 +1,23 @@
+apiVersion: v1
+entries:
+  cachingondemand:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2019-12-18T13:13:12.974901079Z"
+    description: A Helm chart for the deployment of a XCache cluster
+    digest: 08de4f93cff69aa4aecb0109a105f50080542754315a9d43674adb4e904da075
+    name: cachingondemand
+    urls:
+    - https://dodas-ts.github.io/helm_charts/cachingondemand-1.0.3.tgz
+    version: 1.0.3
+  htcondor:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2019-12-18T13:13:12.975423778Z"
+    description: A Helm chart for HTCondor on Kubernetes
+    digest: 973d58f1511ee0d707d669ae0dde664ff6d1fb6bae435efbcbbfc9c1b3fa8f57
+    name: htcondor
+    urls:
+    - https://dodas-ts.github.io/helm_charts/htcondor-0.1.0.tgz
+    version: 0.1.0
+generated: "2019-12-18T13:13:12.973820499Z"

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ccb-pod
+  labels:
+    app: ccb
+spec:
+  template:
+    metadata:
+      labels:
+        app: ccb
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: condor
+                operator: In
+                values:
+                - ccb
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - ccb 
+            topologyKey: kubernetes.io/hostname 
+      hostNetwork: true
+      containers:
+      - name: ccb
+        imagePullPolicy: Always
+        args:
+        - master 
+        env:
+        - name: NETWORK_INTERFACE
+          value:   "{{ .Values.CONDOR_HOST }}"          
+        - name: CONDOR_HOST 
+          value:   "{{ .Values.CONDOR_HOST }}"
+        - name: PROXY_CACHE 
+          value: "{{ .Values.PROXY_CACHE }}:{{ .Values.PROXY_CACHE_Port }}"
+        - name: SEC_DAEMON_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: SEC_CLIENT_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: SEC_NEGOTIATOR_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: SEC_ADVERTISE_STARTD_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: CONDOR_DAEMON_LIST
+          value: COLLECTOR, MASTER, NEGOTIATOR, SCHEDD, STARTD
+
+        image: "{{ .Values.condor_image }}"
+        livenessProbe:
+          exec:
+            command:
+            - voms-proxy-info
+            - --file
+            - /root/gwms_proxy
+            - --exists
+          initialDelaySeconds: 300
+          periodSeconds: 600
+  selector:
+    matchLabels:
+      app: ccb 
+
+  replicas: 1
+
+

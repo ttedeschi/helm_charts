@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: schedd-pv
+  labels:
+    condor: schedd
+spec:
+  capacity:
+    storage: "{{ .Values.spool_size }}"
+  # volumeMode field requires BlockVolume Alpha feature gate to be enabled.
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: "{{ .Values.spool_host_path }}"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: condor
+          operator: In
+          values:
+          - schedd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: schedd-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: "{{ .Values.spool_size_claim }}"
+  selector:
+    matchLabels:
+      condor: schedd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedd-pod
+  labels:
+    app: schedd
+spec:
+  template:
+    metadata:
+      labels:
+        app: schedd
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: condor
+                operator: In
+                values:
+                - schedd
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - schedd
+            topologyKey: kubernetes.io/hostname 
+      hostNetwork: true
+      containers:
+      - name: schedd
+        imagePullPolicy: Always
+        args:
+        - schedd 
+        env:
+        - name: CONDOR_HOST 
+          value:  "{{ .Values.CONDOR_HOST }}"
+        - name: PROXY_CACHE 
+          value: "{{ .Values.PROXY_CACHE }}:{{ .Values.PROXY_CACHE_Port }}"
+        - name: NETWORK_INTERFACE
+          value:  "{{ .Values.NETWORK_INTERFACE}}"
+        - name: LOWPORT
+          value: "{{ .Values.LOWPORT}}"
+        - name: HIGHPORT
+          value: "{{ .Values.HIGHPORT}}"
+        - name: SEC_DAEMON_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: SEC_CLIENT_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: SEC_NEGOTIATOR_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: SEC_ADVERTISE_STARTD_AUTHENTICATION_METHODS
+          value: CLAIMTOBE
+        - name: CONDOR_DAEMON_LIST
+          value: COLLECTOR, MASTER, NEGOTIATOR, SCHEDD, STARTD
+        securityContext:
+          capabilities:
+            add:
+            - CAP_SYS_ADMIN
+          privileged: true
+        image: "{{ .Values.condor_image }}"
+        livenessProbe:
+          exec:
+            command:
+            - voms-proxy-info
+            - --file
+            - /root/gwms_proxy
+            - --exists
+          initialDelaySeconds: 300
+          periodSeconds: 600
+        volumeMounts:
+        - mountPath: "/var/lib/condor/spool/"
+          name: myspool
+        - mountPath: "/home/uwdir"
+          name: uwdir
+      volumes:
+      - name: myspool
+        persistentVolumeClaim:
+          claimName: schedd-claim
+      - name: uwdir
+        hostPath:
+          path: /tmp/uwdir
+  selector:
+    matchLabels:
+      app: schedd
+
+  replicas: 1
