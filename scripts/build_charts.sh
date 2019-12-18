@@ -10,6 +10,8 @@ echo "List of charts $chart_list"
 
 BUILD_DIR=$(mktemp -d)
 
+cp ./ $BUILD_DIR/
+
 for chart in $chart_list; do
     dirname=$(dirname ${chart})
     CHART_NAME="${dirname%"${dirname##*[!/]}"}" # extglob-free multi-trailing-/ trim
@@ -32,8 +34,7 @@ done
 
 mv ./index.yaml ${BUILD_DIR}/
 git checkout gh-pages
-cp ${BUILD_DIR}/*.tgz .
-cp ${BUILD_DIR}/index.yaml .
+cp ${BUILD_DIR}/* .
 git add index.yaml *.tgz
 git commit -m "${COMMIT_MSG}"
 git push origin gh-pages
