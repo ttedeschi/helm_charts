@@ -4,6 +4,11 @@ GH_PAGES=https://dodas-ts.github.io/helm_charts
 COMMIT_MSG="Doc update"
 CURRENT_BRANCH="master"
 
+echo "Committing current changes"
+
+git add -A
+git commit -m "publishing charts"
+
 chart_list=$(find . -name 'Chart.yaml')
 
 echo "List of charts $chart_list"

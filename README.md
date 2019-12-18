@@ -3,4 +3,4 @@
 ## Availble charts
 
 - [cachingondemand](stable/cachingondemand/README.md)
-- [htcondor]()
+- [htcondor](stable/htcondor/README.md)
