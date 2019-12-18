@@ -12,7 +12,7 @@ BUILD_DIR=$(mktemp -d)
 
 echo "Temp area: $BUILD_DIR"
 
-cp ./ $BUILD_DIR/
+cp -r ./ $BUILD_DIR/
 
 for chart in $chart_list; do
     dirname=$(dirname ${chart})
