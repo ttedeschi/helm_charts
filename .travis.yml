@@ -8,10 +8,15 @@ install:
     - /tmp/get-helm-3
     - export PATH=$PATH:/tmp
 
+script: true
+
 before_deploy:
-    make
+    - ./build_travis.sh
 
 deploy: # Deploy documentation to Github in the gh_pages branch
     provider: pages
     skip_cleanup: true
     github_token: $token
+    local_dir: ./
+    on:
+        branch: master
