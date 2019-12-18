@@ -18,7 +18,7 @@ helm repo update
 
 If you want to contribute:
 
-1. create a branch
+1. create a branch (on your forked repo)
 2. upload your changes
 3. create a pull request
 
