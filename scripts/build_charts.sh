@@ -4,18 +4,18 @@ GH_PAGES=https://dodas-ts.github.io/helm_charts
 COMMIT_MSG="Doc update"
 CURRENT_BRANCH="master"
 
-cd stable
+chart_list=$(find . -name 'Chart.yaml')
 
-chart_list=$(find . -name 'Charts.yaml')
+echo "List of charts $chart_list"
 
-for chart in chart_list; do
+for chart in $chart_list; do
     dirname=$(dirname ${chart})
     CHART_NAME="${dirname%"${dirname##*[!/]}"}" # extglob-free multi-trailing-/ trim
     CHART_NAME="${CHART_NAME##*/}"                  # remove everything before the last /
 
     echo "PROCESSING $CHART_NAME"
 
-    helm lint ${CHART_NAME}
+    helm lint ${dirname}
     helm package ${RELEASE}/${CHART_NAME}
 
     if [ -f index.yaml ]; then
@@ -25,7 +25,7 @@ for chart in chart_list; do
     fi
     mv ./index.yaml /tmp/
     mv ./${CHART_NAME}*.tgz /tmp/
-    git checkout gh-pages
+    git checkout -b gh-pages
     cp /tmp/${CHART_NAME}*.tgz .
     cp /tmp/index.yaml .
     git add index.yaml *.tgz
