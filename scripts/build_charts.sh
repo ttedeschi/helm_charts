@@ -35,7 +35,7 @@ done
 mv ./index.yaml ${BUILD_DIR}/
 git checkout gh-pages
 cp ${BUILD_DIR}/* .
-git add index.yaml *.tgz
+git add -A
 git commit -m "${COMMIT_MSG}"
 git push origin gh-pages
 git checkout ${CURRENT_BRANCH}
