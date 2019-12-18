@@ -1,11 +1,11 @@
 language: generic
 
 install:
-    - wget https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O /tmp/kubectl
+    - wget curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -O /tmp/kubectl
     - chmod +x /tmp/kubectl
-    - wget http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -O /tmp/helm.tar.gz
-    - tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
-    - chmod +x /tmp/helm
+    - https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 -O /tmp/get-helm-3 
+    - chmod +x /tmp/get-helm-3
+    - /tmp/get-helm-3
     - export PATH=$PATH:/tmp
 
 before_script:
