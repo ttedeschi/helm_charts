@@ -1,0 +1,20 @@
+language: generic
+
+install:
+    - wget curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -O /tmp/kubectl
+    - chmod +x /tmp/kubectl
+    - https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 -O /tmp/get-helm-3 
+    - chmod +x /tmp/get-helm-3
+    - /tmp/get-helm-3
+    - export PATH=$PATH:/tmp
+
+before_script:
+    - helm init --client-only
+
+script:
+    make
+
+deploy: # Deploy documentation to Github in the gh_pages branch
+    provider: pages
+    skip_cleanup: true
+    github_token: $token
