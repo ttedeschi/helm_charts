@@ -34,7 +34,7 @@ done
 
 mv ./index.yaml ${BUILD_DIR}/
 git checkout gh-pages
-cp ${BUILD_DIR}/* .
+cp -r ${BUILD_DIR}/* .
 git add -A
 git commit -m "${COMMIT_MSG}"
 git push origin gh-pages
