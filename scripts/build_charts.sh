@@ -38,5 +38,3 @@ git add index.yaml *.tgz
 git commit -m "${COMMIT_MSG}"
 git push origin gh-pages
 git checkout ${CURRENT_BRANCH}
-
-rm -r index.yaml *.tgz
