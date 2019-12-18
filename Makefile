@@ -2,7 +2,7 @@ RELEASE ?= stable
 GH_PAGES ?= https://dodas-ts.github.io/helm_charts
 COMMIT_MSG ?= "Doc update"
 
-CURRENT_BRANCH = "spark_fix_PG" 
+CURRENT_BRANCH = "master" 
 
 .PHONY: build-helm
 
@@ -13,4 +13,4 @@ help:
 	@echo "- build-helm			: "
 
 build-helm:
-	./build_charts.sh
+	./scripts/build_charts.sh
