@@ -10,7 +10,7 @@ echo "List of charts $chart_list"
 
 BUILD_DIR=$(mktemp -d)
 
-cp ./ $BUILD_DIR/
+cp ./* $BUILD_DIR/
 
 for chart in $chart_list; do
     dirname=$(dirname ${chart})
