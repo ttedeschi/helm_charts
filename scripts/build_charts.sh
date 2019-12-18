@@ -8,6 +8,8 @@ chart_list=$(find . -name 'Chart.yaml')
 
 echo "List of charts $chart_list"
 
+BUILD_DIR=$(mktemp -d)
+
 for chart in $chart_list; do
     dirname=$(dirname ${chart})
     CHART_NAME="${dirname%"${dirname##*[!/]}"}" # extglob-free multi-trailing-/ trim
@@ -23,14 +25,16 @@ for chart in $chart_list; do
     else
         helm repo index  --url ${GH_PAGES} .
     fi
-    mv ./index.yaml /tmp/
-    mv ./${CHART_NAME}*.tgz /tmp/
-    git checkout -b gh-pages
-    cp /tmp/${CHART_NAME}*.tgz .
-    cp /tmp/index.yaml .
-    git add index.yaml *.tgz
-    git commit -m ${COMMIT_MSG}
-    git push origin gh-pages
-    git checkout ${CURRENT_BRANCH}
+
+    mv ${CHART_NAME}*.tgz ${BUILD_DIR}/
 
 done
+
+mv ./index.yaml ${BUILD_DIR}/
+git checkout -b gh-pages
+cp ${BUILD_DIR}/*.tgz .
+cp ${BUILD_DIR}/index.yaml .
+git add index.yaml *.tgz
+git commit -m ${COMMIT_MSG}
+git push origin gh-pages
+git checkout ${CURRENT_BRANCH}
