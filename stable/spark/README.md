@@ -1,6 +1,6 @@
 # Apache Spark Helm Chart
 
-Apache Spark is a fast and general-purpose cluster computing system including Apache Zeppelin.
+Apache Spark is a fast and general-purpose cluster computing system.
 
 * http://spark.apache.org/
 
