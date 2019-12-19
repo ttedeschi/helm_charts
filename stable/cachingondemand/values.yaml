@@ -1,57 +1,141 @@
-# Default values for dodas_cms.
+# Default values for cachingondemand.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# ExternalIps to be used for service exposition
+externalIp:
+  enabled: true
+  ips:
+  - 192.168.0.123
 
+# Enable this to activate gsi authentication
+gsi:
+  enabled: false
+  
+  # authorized VOs
+  vo:
+  
+  # generate voms files configMap
+  vomses: []
+  # - filename: ""
+  #   content: |
+  #     mymultine
+  #     file
+  
+  # gsi certificates
+  cacheCert: {}
+  #  cert: ""
+  #  key: ""
+
+  # use proxy for remote auth
+  proxy: false
+
+
+# Cache server configuration
 cache:
-  repository: cloudpg/cachingondemand
+  image: cloudpg/cachingondemand
   tag: latest
-  redir_host: xcache-redir-service.default.svc.cluster.local
+  pullPolicy: IfNotPresent
   replicas: 1
-  cache_host_path: /data/xrd
-  block_size: 512k
-  mem_gb: 2
-  high_wm: 0.95
-  low_wm: 0.80
-  n_prefetch: 0
-  origin_host: xrootd-cms.infn.it
-  origin_xrd_port: 1094
-  xrdport: 31494
-  cmsport: 31113
+
+  # Cache specific configuration
+  redirHost: xcache-redir-service.default.svc.cluster.local
+  replicas: 1
+  cachePath: /data/xrd
+  blockSize: 512k
+  memGb: 2
+  highWm: 0.95
+  lowWm: 0.80
+  nPrefetch: 0
+  originHost: xrootd-cms.infn.it
+  originXrdPort: 1094
   streams: 256
-  external_ip: 192.168.0.123
-  vo: "cms"
-  http_port: 8080
+  logLevel: info
 
+  http:
+    enabled: false
+    httpPort: 8080
+
+  persistence:
+    enabled: true
+    cacheHostPath: /data/xrd
+    volumeClaim: {}
+    #  enabled: false
+    #  type: ""
+    #  name: ""
+    #  size: ""
+
+  # TO BE IMPLEMENTED YET
+  configMap:
+    enabled: false
+    name: ""
+    mountPoint: ""
+  nodeSelector: {}
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+
+# Cache redirector configuration
 redirector:
-  repository: cloudpg/cachingondemand
+  enabled: true
+  image: cloudpg/cachingondemand
   tag: latest
+  pullPolicy: IfNotPresent
   replicas: 1
-  xrdport: 31294
-  cmsport: 31213
 
+  # K8s service configuration
+  service:
+    type: ClusterIP
+    xrootd:
+      port: 31294
+      targetPort: 
+      nodePort:
+    cms:
+      port: 31213
+      targetPort: 
+      nodePort:
+
+  # TO BE IMPLEMENTED YET
+  configMap:
+    enabled: false
+    name: ""
+    mountPoint: ""
+  nodeSelector: {}
+  resources: {}
+
+# XROOTD proxy configuration
 proxy:
-  repository: cloudpg/cachingondemand
+  enabled: true
+  image: cloudpg/cachingondemand
+  tag: latest
+  pullPolicy: IfNotPresent
+  replicas: 1
+
+  service:
+    type: ClusterIP
+    xrootd:
+      port: 31394
+      targetPort: 
+      nodePort:
+
+  # TO BE IMPLEMENTED YET
+  configMap:
+    enabled: false
+    name: ""
+    mountPoint: ""
+  nodeSelector: {}
+  resources: {}
+
+fakeOrigin:
+  enabled: false
+  image: cloudpg/cachingondemand
   tag: latest
   replicas: 1
-  external_ip: 192.168.0.123
-  xrdport: 31394
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
