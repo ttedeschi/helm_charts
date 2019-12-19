@@ -24,6 +24,7 @@ master:
     serviceType: NodePort
     jupyter:
         nodePort: 30888
+        token: testme
 
 # WebUi service configuration values
 webUi:

@@ -43,6 +43,7 @@ The following table lists the configurable parameters of the Spark chart and the
 | `master.daemonMemory`   | Master JVM Xms and Xmx option      | `1g`                                                       |
 | `master.serviceType `   | Kubernetes Service type            | `nodePort`                                             |
 | `master.jupyter.nodePort`| k8s node port                     | `30888`                                                 |
+| `master.jupyter.token`  | Token for jupyter notebook         | `testme`                                                   |
 | `hostpath.path`         | Path where to store volumes        | `/tmp`                                                     |
 
 ### Spark WebUi
@@ -52,8 +53,8 @@ The following table lists the configurable parameters of the Spark chart and the
 | `webUi.name`          | Spark webui name                 | `webui`                                                  |
 | `webUi.servicePort`   | k8s service port                 | `8080`                                                   |
 | `webUi.containerPort` | Container listening port         | `8080`                                                   |
-| `webUi.serviceType `   | Kubernetes Service type            | `nodePort`                                             |
-| `webUi.nodePort`       | k8s node port                     | `30808`                                                 |
+| `webUi.serviceType `   | Kubernetes Service type         | `nodePort`                                             |
+| `webUi.nodePort`       | k8s node port                   | `30808`                                                 |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
