@@ -93,11 +93,11 @@ redirector:
 
   # K8s service configuration
   service:
-    type: ClusterIP
+    type: NodePort
     xrootd:
-      port: 31294
+      port: 
       targetPort: 
-      nodePort:
+      nodePort: 31194
     cms:
       port: 31213
       targetPort: 
@@ -120,11 +120,11 @@ proxy:
   replicas: 1
 
   service:
-    type: ClusterIP
+    type: NodePort 
     xrootd:
-      port: 31394
+      port: 
       targetPort: 
-      nodePort:
+      nodePort: 31394
 
   # TO BE IMPLEMENTED YET
   configMap:
@@ -138,4 +138,12 @@ fakeOrigin:
   enabled: false
   image: cloudpg/cachingondemand
   tag: latest
+  pullPolicy: IfNotPresent
   replicas: 1
+
+  service:
+    type: NodePort
+    xrootd:
+      port:
+      targetPort: 
+      nodePort: 31294

@@ -13,7 +13,7 @@ spec:
     name: xrootd
     port: {{ .Values.proxy.service.xrootd.port }}
     targetPort: {{ .Values.proxy.service.xrootd.targetPort }}
-    {{- if eq .Values.redirector.service.type "NodePort" }}
+    {{- if eq .Values.proxy.service.type "NodePort" }}
     nodePort: {{ .Values.proxy.service.xrootd.nodePort }}
     {{- end}}
   {{- if .Values.externalIp }}
