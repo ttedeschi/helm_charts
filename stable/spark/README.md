@@ -13,7 +13,6 @@ This chart will do the following:
 
 ## Prerequisites
 
-* Assumes that serviceAccount tokens are available under hostname metadata. (Works on GKE by default) URL -- http://metadata/computeMetadata/v1/instance/service-accounts/default/token
 
 ## Installing the Chart
 
