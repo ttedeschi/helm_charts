@@ -15,58 +15,56 @@ roleRef:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.Master.Name }}
+  name: {{ .Values.master.name }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+    component: "{{ .Release.Name }}-{{ .Values.master.component }}"
 spec:
-  type: {{ .Values.Master.ServiceType }}
+  type: {{ .Values.master.serviceType }}
   ports:
-    - port: {{ .Values.Master.ServicePort }}
+    - port: {{ .Values.master.servicePort }}
       name: master
-      targetPort: {{ .Values.Master.ContainerPort }}
+      targetPort: {{ .Values.master.containerPort }}
     - port: 8888 
-      nodePort: {{ .Values.Master.Jupyter.NodePort }}
+      nodePort: {{ .Values.master.jupyter.nodePort }}
       name: jupyter
       targetPort: 8888
   externalIPs:
     - "{{ .Values.externalIP.ip }}"
-
   selector:
-    component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+    component: "{{ .Release.Name }}-{{ .Values.master.component }}"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.WebUi.Name }}
+  name: {{ .Values.webUi.name }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+    component: "{{ .Release.Name }}-{{ .Values.master.component }}"
 spec:
-  type: {{ .Values.WebUi.ServiceType }}
+  type: {{ .Values.webUi.serviceType }}
   ports:
-    - port: {{ .Values.WebUi.ServicePort }}
-      nodePort: {{ .Values.WebUi.NodePort }}
-      targetPort: {{ .Values.WebUi.ContainerPort }}
+    - port: {{ .Values.webUi.servicePort }}
+      nodePort: {{ .Values.webUi.nodePort }}
+      targetPort: {{ .Values.webUi.containerPort }}
   externalIPs:
     - "{{ .Values.externalIP.ip }}"
-
   selector:
-    component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+    component: "{{ .Release.Name }}-{{ .Values.master.component }}"
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.Master.Name }}
+  name: {{ .Values.master.name }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+    component: "{{ .Release.Name }}-{{ .Values.master.component }}"
     app: spark-master
 spec:
   #podAntiAffinity:
@@ -78,40 +76,40 @@ spec:
   #        values:
   #        - spark-master
   #    topologyKey: kubernetes.io/hostname
-  replicas: {{ default 1 .Values.Master.Replicas }}
+  replicas: {{ default 1 .Values.master.replicas }}
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+      component: "{{ .Release.Name }}-{{ .Values.master.component }}"
   template:
     metadata:
       labels:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+        component: "{{ .Release.Name }}-{{ .Values.master.component }}"
     spec:
       containers:
-        - name: {{ .Values.Master.Name }}
-          image: "{{ .Values.Master.Image }}:{{ .Values.Master.ImageTag }}"
+        - name: {{ .Values.master.name }}
+          image: "{{ .Values.master.image }}:{{ .Values.master.imageTag }}"
           args: ["master"]
           ports:
-            - containerPort: {{ .Values.Master.ContainerPort }}
-            - containerPort: {{ .Values.WebUi.ContainerPort }}
+            - containerPort: {{ .Values.master.containerPort }}
+            - containerPort: {{ .Values.webUi.containerPort }}
           resources:
             requests:
-              cpu: "{{ .Values.Master.Cpu }}"
-              memory: "{{ .Values.Master.Memory }}"
+              cpu: "{{ .Values.master.cpu }}"
+              memory: "{{ .Values.master.memory }}"
           env:
           - name: SPARK_DAEMON_MEMORY
-            value: {{ default "1g" .Values.Master.DaemonMemory | quote }}
+            value: {{ default "1g" .Values.master.daemonMemory | quote }}
           - name: SPARK_MASTER_HOST
             value: master
           - name: SPARK_MASTER_PORT
-            value: {{ .Values.Master.ServicePort | quote }}
+            value: {{ .Values.master.servicePort | quote }}
           - name: SPARK_MASTER_WEBUI_PORT
-            value: {{ .Values.WebUi.ContainerPort | quote }}
+            value: {{ .Values.webUi.containerPort | quote }}
         - name: jupyter
           imagePullPolicy: Always
           command: ["start.sh"]
@@ -133,5 +131,4 @@ spec:
       - name: jupyter-data
         hostPath:
           path: {{ .Values.hostPath.path }}
-          # TODO pass path to values
 
