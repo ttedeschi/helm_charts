@@ -1,11 +1,14 @@
-#Spark:
-#   path: /opt/spark
+# Default values for cachingondemand.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
 
+# ExternalIps to be used for service exposition
 externalIP:
     enabled: true
     ip: 192.168.65.3 
 
+# Spark master deployment and service configuration values
 master:
     name: master
     image: cloudpg/spark-py
@@ -22,6 +25,7 @@ master:
     jupyter:
         nodePort: 30888
 
+# WebUi service configuration values
 webUi:
   name: webui
   servicePort: 8080
@@ -29,5 +33,6 @@ webUi:
   nodePort: 30808
   serviceType: NodePort
 
+# Where to store jupyter data
 hostPath: 
     path: /tmp
