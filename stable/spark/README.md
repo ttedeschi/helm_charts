@@ -8,7 +8,7 @@ Apache Spark is a fast and general-purpose cluster computing system.
 This chart will do the following:
 
 * 1 x Spark Master with port 8080 exposed with a nodePort service (webUi)
-* 1 x Jupyter notebook with port 30888 exposed witha nodePort service, with 2 executors
+* 1 x Jupyter notebook with port 30888 exposed with a nodePort service, with 2 executors
 * All using Kubernetes Deployments
 
 ## Prerequisites
