@@ -24,8 +24,7 @@ spec:
     nodePort: {{ .Values.redirector.service.cms.nodePort }}
     {{- end}}
   {{- if .Values.externalIp.enabled }}
-  externalIPs:
-  - {{ .Values.externalIp }}
+  externalIPs: {{ .Values.externalIp.ips }}
   {{ - end}}
 
 {{- end }}
