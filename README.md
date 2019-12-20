@@ -13,3 +13,5 @@ helm repo update
     - `helm install dodas/cachingondemand -v <myvalues>.yaml`
 - [htcondor](stable/htcondor/README.md)
     - `helm install dodas/htcondor -v <myvalues>.yaml`
+- [spark](stable/spark/README.md)
+    - `helm install dodas/spark -v <myvalues>.yaml`
