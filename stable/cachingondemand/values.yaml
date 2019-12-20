@@ -59,6 +59,7 @@ cache:
   persistence:
     enabled: true
     cacheHostPath: /data/xrd
+    # PVC TO BE IMPLEMENTED
     volumeClaim: {}
     #  enabled: false
     #  type: ""

@@ -25,9 +25,14 @@ spec:
                 - xcache
             topologyKey: "kubernetes.io/hostname"
       volumes:
+      {{- if .Values.cache.persistence.enabled }}
       - name: xcache-data
+        {{- if not .Values.cache.persistence.volumeClaim }}
         hostPath:
-          path: {{ .Values.cache.cacheHostPath }}
+          path: {{ .Values.cache.cachePath }}
+        {{- end}}
+        # PVC TO BE IMPLEMENTED
+      {{- end }}
       {{- if .Values.gsi.enabled }}
       - name: xcache-creds
          emptyDir: {}
@@ -82,8 +87,10 @@ spec:
           value: "{{ .Values.cache.streams }}"
         image: "{{ .Values.cache.image }}:{{ .Values.cache.tag }}"
         volumeMounts:
+        {{- if .Values.cache.persistence.enabled }}
         - mountPath: {{ .Values.cache.cachePath }}
           name: xcache-data
+        {{- end }}
         {{- if .Values.gsi.enabled }}
         ## WAITING FOR CMS VOMS TTS solution
         - mountPath: /tmp/
