@@ -23,7 +23,7 @@ spec:
     {{- if eq .Values.redirector.service.type "NodePort" }}
     nodePort: {{ .Values.redirector.service.cms.nodePort }}
     {{- end}}
-  {{- if .Values.externalIp }}
+  {{- if .Values.externalIp.enabled }}
   externalIPs:
   - {{ .Values.externalIp }}
   {{ - end}}

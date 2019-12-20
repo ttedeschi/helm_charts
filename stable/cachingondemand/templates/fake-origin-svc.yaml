@@ -16,7 +16,7 @@ spec:
     {{- if eq .Values.fakeOrigin.service.type "NodePort" }}
     nodePort: {{ .Values.fakeOrigin.service.xrootd.nodePort }}
     {{- end}}
-  {{- if .Values.externalIp }}
+  {{- if .Values.externalIp.enabled }}
   externalIPs:
   - {{ .Values.externalIp }}
   {{ - end}}

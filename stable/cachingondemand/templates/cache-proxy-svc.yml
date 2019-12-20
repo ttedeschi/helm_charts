@@ -16,7 +16,7 @@ spec:
     {{- if eq .Values.proxy.service.type "NodePort" }}
     nodePort: {{ .Values.proxy.service.xrootd.nodePort }}
     {{- end}}
-  {{- if .Values.externalIp }}
+  {{- if .Values.externalIp.enabled }}
   externalIPs:
   - {{ .Values.externalIp }}
   {{ - end}}
