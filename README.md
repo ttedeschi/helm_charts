@@ -10,9 +10,9 @@ helm repo update
 ## Availble charts
 
 - [cachingondemand](stable/cachingondemand/README.md)
-    - `helm install dodas/cachingondemand -f <myvalues>.yaml`
+    - `helm install cod dodas/cachingondemand -f <myvalues>.yaml`
 - [htcondor](stable/htcondor/README.md)
-    - `helm install dodas/htcondor -f <myvalues>.yaml`
+    - `helm install htcondor dodas/htcondor -f <myvalues>.yaml`
 
 ## Contributing
 
