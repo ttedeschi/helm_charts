@@ -1,16 +1,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: default-pyspark
-  namespace: default
+  name: {{ .Values.clusterRoleBinding.name }}
+  namespace: {{ .Values.clusterRoleBinding.namespace }}
 subjects:
-- kind: User
-  name: system:serviceaccount:default:default
-  apiGroup: rbac.authorization.k8s.io
+- kind: {{ .Values.clusterRoleBinding.subjects.kind }}
+  name: {{ .Values.clusterRoleBinding.subjects.name }}
+  apiGroup: {{ .Values.clusterRoleBinding.subjects.apiGroup }}
 roleRef:
-  kind: ClusterRole
-  name: edit
-  apiGroup: rbac.authorization.k8s.io
+  kind: {{ .Values.clusterRoleBinding.roleRef.kind }}
+  name: {{ .Values.clusterRoleBinding.roleRef.name }}
+  apiGroup: {{ .Values.clusterRoleBinding.roleRef.apiGroup }}
 ---
 apiVersion: v1
 kind: Service
@@ -27,14 +27,16 @@ spec:
     - port: {{ .Values.master.servicePort }}
       name: master
       targetPort: {{ .Values.master.containerPort }}
-    - port: 8888 
+    - port: {{ .Values.master.jupyter.port }} 
       nodePort: {{ .Values.master.jupyter.nodePort }}
       name: jupyter
-      targetPort: 8888
-  externalIPs:
-    - "{{ .Values.externalIP.ip }}"
+      targetPort: {{ .Values.master.jupyter.port }}
   selector:
     component: "{{ .Release.Name }}-{{ .Values.master.component }}"
+  {{- if .Values.externalIp.enabled }}
+  externalIPs: 
+    - "{{ .Values.externalIp.ips }}"
+  {{- end}}
 ---
 apiVersion: v1
 kind: Service
@@ -51,10 +53,12 @@ spec:
     - port: {{ .Values.webUi.servicePort }}
       nodePort: {{ .Values.webUi.nodePort }}
       targetPort: {{ .Values.webUi.containerPort }}
-  externalIPs:
-    - "{{ .Values.externalIP.ip }}"
   selector:
     component: "{{ .Release.Name }}-{{ .Values.master.component }}"
+  {{- if .Values.externalIp.enabled }}
+  externalIPs: 
+    - "{{ .Values.externalIp.ips }}"
+  {{- end}}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -121,7 +125,7 @@ spec:
               value: ipython
             - name: PYSPARK_DRIVER_PYTHON_OPTS
               value: "notebook --NotebookApp.token={{ .Values.master.jupyter.token }}"
-          image: "cloudpg/spark-notebook:k8s-py3.6" 
+          image: "{{ .Values.master.jupyter.image }}:{{ .Values.master.jupyter.tag }}"
           ports:
           - containerPort: 8888
           volumeMounts:

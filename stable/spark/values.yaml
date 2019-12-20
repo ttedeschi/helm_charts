@@ -3,10 +3,24 @@
 # Declare variables to be passed into your templates.
 
 
+
+#ClusterRoleBinding parameters
+clusterRoleBinding:
+    name: default-pyspark
+    namespace: default
+    subjects:
+        kind: User
+        name: system:serviceaccount:default:default
+        apiGroup: rbac.authorization.k8s.io
+    roleRef:
+        kind: ClusterRole
+        name: edit
+        apiGroup: rbac.authorization.k8s.io
+
 # ExternalIps to be used for service exposition
-externalIP:
+externalIp:
     enabled: true
-    ip: 192.168.65.3 
+    ips: 192.168.65.3 
 
 # Spark master deployment and service configuration values
 master:
@@ -25,6 +39,9 @@ master:
     jupyter:
         nodePort: 30888
         token: testme
+        port: 8888
+        image: cloudpg/spark-notebook
+        tag: k8s-py3.6
 
 # WebUi service configuration values
 webUi:
