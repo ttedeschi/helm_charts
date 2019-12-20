@@ -22,9 +22,10 @@ spec:
         {{- if not .Values.gsi.enabled }}
         - --nogsi
         {{- end }}
-        {{- if not .Values.gsi.proxy }}
-        - --nogrid
-        {{- end }}
+        # TO be fixed
+        #{{- if not .Values.gsi.proxy }}
+        #- --nogrid
+        #{{- end }}
         - --redirector
         - --health_port
         - "8080"

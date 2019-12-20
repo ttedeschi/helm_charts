@@ -4,7 +4,7 @@
 
 # ExternalIps to be used for service exposition
 externalIp:
-  enabled: true
+  enabled: false 
   ips:
   - 192.168.0.123
 
@@ -50,16 +50,12 @@ cache:
   originHost: xrootd-cms.infn.it
   originXrdPort: 1094
   streams: 256
+  # TO BE IMPLEMENTED
   logLevel: info
-
-  http:
-    enabled: false
-    httpPort: 8080
 
   persistence:
     enabled: true
     cacheHostPath: /data/xrd
-    # PVC TO BE IMPLEMENTED
     volumeClaim: {}
     #  enabled: false
     #  type: ""
@@ -67,6 +63,9 @@ cache:
     #  size: ""
 
   # TO BE IMPLEMENTED YET
+  http:
+    enabled: false
+    httpPort: 8080
   configMap:
     enabled: false
     name: ""
@@ -96,13 +95,13 @@ redirector:
   service:
     type: NodePort
     xrootd:
-      port: 
-      targetPort: 
-      nodePort: 31194
+      port: 1294
+      targetPort: 31294 
+      nodePort: 31294
     cms:
-      port: 31213
-      targetPort: 
-      nodePort:
+      port: 1213
+      targetPort: 31213
+      nodePort: 31213
 
   # TO BE IMPLEMENTED YET
   configMap:
@@ -123,8 +122,8 @@ proxy:
   service:
     type: NodePort 
     xrootd:
-      port: 
-      targetPort: 
+      port: 1394
+      targetPort: 31394
       nodePort: 31394
 
   # TO BE IMPLEMENTED YET
@@ -145,6 +144,6 @@ fakeOrigin:
   service:
     type: NodePort
     xrootd:
-      port:
-      targetPort: 
-      nodePort: 31294
+      port: 1094
+      targetPort: 1094
+      nodePort: 31194

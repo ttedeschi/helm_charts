@@ -33,9 +33,10 @@ spec:
       - name: proxy
         imagePullPolicy: {{  .Values.proxy.pullPolicy }}
         args:
-        {{- if not .Values.gsi.enabled }}
-        - --nogsi
-        {{- end }}
+        # TO be fixed
+        #{{- if not .Values.gsi.enabled }}
+        #- --nogsi
+        #{{- end }}
         {{- if not .Values.gsi.proxy }}
         - --nogrid
         {{- end }}
