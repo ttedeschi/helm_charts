@@ -8,7 +8,8 @@ install:
     - /tmp/get-helm-3
     - export PATH=$PATH:/tmp
 
-script: true
+script:
+    - ./scripts/helm_lint.sh
 
 before_deploy:
     - ./scripts/build_travis.sh
