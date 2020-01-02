@@ -7,7 +7,6 @@
 #ClusterRoleBinding parameters
 clusterRoleBinding:
     name: default-pyspark
-    namespace: default
     subjects:
         kind: User
         name: system:serviceaccount:default:default
@@ -42,6 +41,7 @@ master:
         port: 8888
         image: cloudpg/spark-notebook
         tag: k8s-py3.6
+
 
 # WebUi service configuration values
 webUi:

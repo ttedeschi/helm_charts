@@ -14,4 +14,4 @@ helm repo update
 - [htcondor](stable/htcondor/README.md)
     - `helm install dodas/htcondor -v <myvalues>.yaml`
 - [spark](stable/spark/README.md)
-    - `helm install dodas/spark -v <myvalues>.yaml`
+    - `helm install dodas/spark -f <myvalues>.yaml`
