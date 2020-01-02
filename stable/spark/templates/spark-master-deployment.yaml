@@ -2,6 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ .Values.clusterRoleBinding.name }}
+  namespace: {{ .Values.clusterRoleBinding.namespace }}
 subjects:
 - kind: {{ .Values.clusterRoleBinding.subjects.kind }}
   name: {{ .Values.clusterRoleBinding.subjects.name }}
@@ -15,6 +16,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.master.name }}
+  namespace: {{ .Values.master.namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -41,6 +43,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.webUi.name }}
+  namespace: {{ .Values.webUi.namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -63,6 +66,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ .Values.master.name }}
+  namespace: {{ .Values.master.namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

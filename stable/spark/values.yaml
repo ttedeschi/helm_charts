@@ -7,6 +7,7 @@
 #ClusterRoleBinding parameters
 clusterRoleBinding:
     name: default-pyspark
+    namespace: default
     subjects:
         kind: User
         name: system:serviceaccount:default:default
@@ -24,6 +25,7 @@ externalIp:
 # Spark master deployment and service configuration values
 master:
     name: master
+    namespace: default
     image: cloudpg/spark-py
     imageTag: dodas-2.4.3-bigdl
     replicas: 1
@@ -46,6 +48,7 @@ master:
 # WebUi service configuration values
 webUi:
   name: webui
+  namespace: default
   servicePort: 8080
   containerPort: 8080
   nodePort: 30808
