@@ -5,8 +5,7 @@
 # ExternalIps to be used for service exposition
 externalIp:
   enabled: false 
-  ips:
-  - 192.168.0.123
+  ips: []
 
 # Enable this to activate gsi authentication
 gsi:
@@ -40,7 +39,6 @@ cache:
 
   # Cache specific configuration
   redirHost: xcache-redir-service.default.svc.cluster.local
-  replicas: 1
   cachePath: /data/xrd
   blockSize: 512k
   memGb: 2
@@ -56,11 +54,11 @@ cache:
   persistence:
     enabled: true
     cacheHostPath: /data/xrd
-    volumeClaim: {}
-    #  enabled: false
-    #  type: ""
-    #  name: ""
-    #  size: ""
+    volumeClaim: 
+      enabled: false
+      type: ""
+      name: ""
+      size: ""
 
   # TO BE IMPLEMENTED YET
   http:

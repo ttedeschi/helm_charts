@@ -27,7 +27,7 @@ spec:
       volumes:
       {{- if .Values.cache.persistence.enabled }}
       - name: xcache-data
-        {{- if not .Values.cache.persistence.volumeClaim }}
+        {{- if not .Values.cache.persistence.volumeClaim.enabled }}
         hostPath:
           path: {{ .Values.cache.cachePath }}
         {{- end}}
@@ -35,7 +35,7 @@ spec:
       {{- end }}
       {{- if .Values.gsi.enabled }}
       - name: xcache-creds
-         emptyDir: {}
+        emptyDir: {}
       {{- if .Values.gsi.vo }}
       - name: vomses
         configMap:
