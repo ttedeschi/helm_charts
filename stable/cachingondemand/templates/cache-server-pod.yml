@@ -30,7 +30,7 @@ spec:
         {{- if not .Values.cache.persistence.volumeClaim.enabled }}
         hostPath:
           path: {{ .Values.cache.cachePath }}
-        {{- end}}
+        {{- end }}
         # PVC TO BE IMPLEMENTED
       {{- end }}
       {{- if .Values.gsi.enabled }}

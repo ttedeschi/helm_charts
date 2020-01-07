@@ -1,0 +1,16 @@
+{{- if .Values.ttsCache.enabled }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: tts-svc
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: tts
+  ports:
+  - protocol: TCP
+    name: tts
+    port: 8080
+    targetPort: 80
+    nodePort: {{ .Values.proxyCachePort }}
+{{- end }}

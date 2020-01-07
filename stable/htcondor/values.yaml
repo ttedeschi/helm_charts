@@ -2,22 +2,88 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-CONDOR_HOST:
-CCB_HOST:
-PROXY_CACHE:
-PROXY_CACHE_Port: 30080
-NETWORK_INTERFACE:
+condorHost:
+ccbHost:
+proxyCacheHost:
+proxyCachePort: 30080
+
+htcMaster:
+  enabled: true
+  image: dodasts/htcondor
+  tag: fermi
+  pullPolicy: ifNotPresent
+  replicas: 1
+  nodeSelector: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: condor
+            operator: In
+            values:
+            - ccb
+  networkInterface: ""
+
+htcSchedd:
+  enabled: true
+  image: dodasts/htcondor
+  tag: fermi
+  pullPolicy: ifNotPresent
+  replicas: 1
+  nodeSelector: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: condor
+            operator: In
+            values:
+            - schedd
+  persistence:
+    enabled: true
+    size: 5Gi
+    claimSize: 4Gi
+    storageClass: local-storage
+    mountPath: /var/lib/condor/spool/
+    options: |
+      local:
+        path: " /tmp/"
+      nodeAffinity:
+        required:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: condor
+              operator: In
+              values:
+              - schedd
+  networkInterface: ""
+  lowPort: 31024
+  highPort: 32048
+  # TODO: implement configMap for mapfile
+  # TODO: get rid of ttscache with secrets
+
+ttsCache:
+  enabled: true
+  image: dodasts/ttscache
+  tag: v1.1.0-dodas
+  pullPolicy: ifNotPresent
+  replicas: 1
+  iamToken:
+  iamClientId:
+  iamClientSecret:
+  iamScimClientId:
+  iamScimSecret:
+  iamMapGroup:
+  proxyAudience: "https://dodas-tts.cloud.cnaf.infn.it"
+  proxyTTS: "https://dodas-tts.cloud.cnaf.infn.it"
+  proxyIAMEndpoint: "https://dodas-iam.cloud.cnaf.infn.it/"
+  proxyCredentialEndpoint: "https://dodas-tts.cloud.cnaf.infn.it/api/v2/iam/credential"
+
 
 SLOT_TYPE_1: cpus=1, mem=2000
 
-LOWPORT: 31024
-HIGHPORT: 32048
+wn:
 
-spool_size: 5Gi
-spool_size_claim: 4Gi
-spool_host_path: /tmp/
-
-condor_image: dodasts/htcondor:fermi
 
 nfs:
   enabled: false
@@ -34,15 +100,3 @@ cvmfs:
     property.2=value-2
     property.3=value-3
 
-IAM_TOKEN:
-IAM_CLIENT_ID:
-IAM_CLIENT_SECRET:
-IAM_SCIM_CLIENT_ID:
-IAM_SCIM_SECRET:
-IAM_MAP_GROUP:
-PROXY_AUDIENCE: "https://dodas-tts.cloud.cnaf.infn.it"
-PROXY_TTS: "https://dodas-tts.cloud.cnaf.infn.it"
-PROXY_IAM_ENDPOINT: "https://dodas-iam.cloud.cnaf.infn.it/"
-PROXY_CREDENTIAL_ENDPOINT: "https://dodas-tts.cloud.cnaf.infn.it/api/v2/iam/credential"
-
-tts_image: "dodasts/ttscache:v1.1.0-dodas"
