@@ -47,6 +47,8 @@ helm repo update
 helm install cod dodas/cachingondemand
 ```
 
+> **Tip**: You can use the default [values.yaml](values.yaml)
+
 ### Values
 
 | Value                                 | Default                                        | Description                                                             | Type    |
