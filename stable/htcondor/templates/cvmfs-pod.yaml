@@ -14,12 +14,12 @@ kind: Deployment
 metadata:
   name: cvmfs
   labels:
-    app: cvmfs
+    app.kubernetes.io/name: cvmfs-pod
 spec:
   template:
     metadata:
       labels:
-        app: cvmfs
+        app.kubernetes.io/name: cvmfs
     spec:
       affinity:
         podAntiAffinity:
@@ -30,26 +30,20 @@ spec:
                 operator: In
                 values:
                 - cvmfs
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: condor
-                operator: NotIn
-                values:
-                - ccb
-                - schedd
-            topologyKey: kubernetes.io/hostname
+        {{- if .Values.htcWn.nodeSelector }}
+        {{ .Values.htcWn.nodeSelector }}
+        {{- end }}
       dnsPolicy: None
       dnsConfig:
         nameservers:
         - 8.8.8.8
       containers:
       - name: cvmfs
-        image: "{{ .Values.cvmfs.image }}"
+        image: "{{ .Values.cvmfs.image }}:{{ .Values.cvmfs.tag }}"
+        imagePullPolicy: {{ .Values.cvmfs.pullPolicy }}
         env:
         - name: REPO_LIST
-          value:   "{{ .Values.cvmfs.REPO_LIST }}"
+          value:   "{{ .Values.cvmfs.repoList }}"
         securityContext:
           privileged: true
           capabilities:
@@ -73,6 +67,6 @@ spec:
         # TODO CONFIGMAP
   selector:
     matchLabels:
-      app: cvmfs
-  replicas: 1
+      app.kubernetes.io/name: cvmfs
+  replicas: {{ .Values.cvmfs.replicas }}
 {{- end }}

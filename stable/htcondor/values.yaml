@@ -13,6 +13,7 @@ htcMaster:
   tag: fermi
   pullPolicy: ifNotPresent
   replicas: 1
+  networkInterface: ""
   nodeSelector: |
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -22,7 +23,8 @@ htcMaster:
             operator: In
             values:
             - ccb
-  networkInterface: ""
+        topologyKey: kubernetes.io/hostname
+  # TODO: implement configMap for configuring each daemon
 
 htcSchedd:
   enabled: true
@@ -30,6 +32,9 @@ htcSchedd:
   tag: fermi
   pullPolicy: ifNotPresent
   replicas: 1
+  networkInterface: ""
+  lowPort: 31024
+  highPort: 32048
   nodeSelector: |
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -39,6 +44,7 @@ htcSchedd:
             operator: In
             values:
             - schedd
+        topologyKey: kubernetes.io/hostname
   persistence:
     enabled: true
     size: 5Gi
@@ -56,11 +62,33 @@ htcSchedd:
               operator: In
               values:
               - schedd
-  networkInterface: ""
-  lowPort: 31024
-  highPort: 32048
+          topologyKey: kubernetes.io/hostname
   # TODO: implement configMap for mapfile
   # TODO: get rid of ttscache with secrets
+
+htcWn:
+  image: dodasts/htcondor
+  tag: fermi
+  pullPolicy: ifNotPresent
+  replicas: 1
+  cpu:
+    request: 1
+    limit: 1.5
+  ram:
+    request: 2048Mi
+    limit: 2500Mi
+  slotType: cpus=1, mem=2000
+  nodeSelector: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: condor
+            operator: NotIn
+            values:
+            - ccb
+            - schedd
+        topologyKey: kubernetes.io/hostname
 
 ttsCache:
   enabled: true
@@ -73,28 +101,26 @@ ttsCache:
   iamClientSecret:
   iamScimClientId:
   iamScimSecret:
-  iamMapGroup:
+  iamMapGroup: ALL
   proxyAudience: "https://dodas-tts.cloud.cnaf.infn.it"
   proxyTTS: "https://dodas-tts.cloud.cnaf.infn.it"
   proxyIAMEndpoint: "https://dodas-iam.cloud.cnaf.infn.it/"
   proxyCredentialEndpoint: "https://dodas-tts.cloud.cnaf.infn.it/api/v2/iam/credential"
 
-
-SLOT_TYPE_1: cpus=1, mem=2000
-
-wn:
-
-
 nfs:
   enabled: false
-  size: 1Mi
+  size: 1Gi
+  claimSize: 950Mi
   server: DUMMY
   path: "/"
 
 cvmfs:
   enabled: false
-  image: cloudpg/cvmfs:k8s
-  REPO_LIST: cms.cern.ch oasis.cern.ch
+  image: cloudpg/cvmfs
+  tag: k8s
+  pullPolicy: ifNotPresent
+  replicas: 1
+  repoList: cms.cern.ch oasis.cern.ch
   defaultLocalConfig: |-
     property.1=value-1
     property.2=value-2
