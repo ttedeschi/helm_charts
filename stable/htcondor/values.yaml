@@ -11,7 +11,7 @@ htcMaster:
   enabled: true
   image: dodasts/htcondor
   tag: fermi
-  pullPolicy: ifNotPresent
+  pullPolicy: IfNotPresent
   replicas: 1
   networkInterface: ""
   nodeSelector: |
@@ -30,7 +30,7 @@ htcSchedd:
   enabled: true
   image: dodasts/htcondor
   tag: fermi
-  pullPolicy: ifNotPresent
+  pullPolicy: IfNotPresent
   replicas: 1
   networkInterface: ""
   lowPort: 31024
@@ -69,7 +69,7 @@ htcSchedd:
 htcWn:
   image: dodasts/htcondor
   tag: fermi
-  pullPolicy: ifNotPresent
+  pullPolicy: IfNotPresent
   replicas: 1
   cpu:
     request: 1
@@ -94,7 +94,7 @@ ttsCache:
   enabled: true
   image: dodasts/ttscache
   tag: v1.1.0-dodas
-  pullPolicy: ifNotPresent
+  pullPolicy: IfNotPresent
   replicas: 1
   iamToken:
   iamClientId:
@@ -118,7 +118,7 @@ cvmfs:
   enabled: false
   image: cloudpg/cvmfs
   tag: k8s
-  pullPolicy: ifNotPresent
+  pullPolicy: IfNotPresent
   replicas: 1
   repoList: cms.cern.ch oasis.cern.ch
   defaultLocalConfig: |-

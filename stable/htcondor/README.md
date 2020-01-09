@@ -31,14 +31,14 @@ helm install htcondor dodas/htcondor
 | htcMaster.enabled                  | true                                                         | Enable HTCondor master deployment                        | boolean |
 | htcMaster.image                    | dodasts/htcondor                                             | HTCondor master docker image                             | string  |
 | htcMaster.tag                      | fermi                                                        | HTCondor master docker image tag                         | string  |
-| htcMaster.pullPolicy               | ifNotPresent                                                 | HTCondor master image pull policy                        | string  |
+| htcMaster.pullPolicy               | IfNotPresent                                                 | HTCondor master image pull policy                        | string  |
 | htcMaster.replicas                 | 1                                                            | HTCondor master replicas                                 | int     |
 | networkInterface                   | ""                                                           | HTCondor master network interface (address) to be used   | string  |
 | nodeSelector                       | see [values.yaml](values.yaml)                               | HTCondor master node affinity                            | string  |
 | htcSchedd.enabled                  | true                                                         | Enable HTCondor Sched deployment                         | boolean |
 | htcSchedd.image                    | dodasts/htcondor                                             | HTCondor Sched docker image                              | string  |
 | htcSchedd.tag                      | fermi                                                        | HTCondor Sched docker image tag                          | string  |
-| htcSchedd.pullPolicy               | ifNotPresent                                                 | HTCondor Sched image pull policy                         | int     |
+| htcSchedd.pullPolicy               | IfNotPresent                                                 | HTCondor Sched image pull policy                         | int     |
 | htcSchedd.replicas                 | 1                                                            | HTCondor Sched replicas                                  | int     |
 | htcSchedd.networkInterface         | ""                                                           | HTCondor Sched network interface (address) to be used    | string  |
 | htcSchedd.lowPort                  | 31024                                                        | HTCondor Sched lower port limit                          | int     |
@@ -52,7 +52,7 @@ helm install htcondor dodas/htcondor
 | htcSchedd.persistence.options      | see [values.yaml](values.yaml)                               | Spool directory additional volume options                | strings |
 | htcWn.image                        | dodasts/htcondor                                             | HTCondor WorkerNode docker image                         | string  |
 | htcWn.tag                          | fermi                                                        | HTCondor WorkerNode docker image tag                     | string  |
-| htcWn.pullPolicy                   | ifNotPresent                                                 | HTCondor WorkerNode image pullPolicy                     | string  |
+| htcWn.pullPolicy                   | IfNotPresent                                                 | HTCondor WorkerNode image pullPolicy                     | string  |
 | htcWn.replicas                     | 1                                                            | HTCondor WorkerNode replicas                             | float   |
 | htcWn.cpu.request                  | 1                                                            | HTCondor WorkerNode k8s cpu requested                    | float   |
 | htcWn.cpu.limit                    | 1.5                                                          | HTCondor WorkerNode k8s cpu limit                        | float   |
@@ -63,7 +63,7 @@ helm install htcondor dodas/htcondor
 | ttsCache.enabled                   | true                                                         | Enable TTS cache deployment                              | boolean |
 | ttsCache.image                     | dodasts/ttscache                                             | TTS cache docker image                                   | string  |
 | ttsCache.tag                       | v1.1.0-dodas                                                 | TTS cache docker image tag                               | string  |
-| ttsCache.pullPolicy                | ifNotPresent                                                 | TTS cache image pull policy                              | string  |
+| ttsCache.pullPolicy                | IfNotPresent                                                 | TTS cache image pull policy                              | string  |
 | ttsCache.replicas                  | 1                                                            | TTS cache replicas                                       | int     |
 | ttsCache.iamToken                  | null                                                         | IAM access token of the admin                            | string  |
 | ttsCache.iamClientId               | null                                                         | IAM client ID for proxy retrieval                        | string  |
@@ -83,7 +83,7 @@ helm install htcondor dodas/htcondor
 | cvmfs.enabled                      | false                                                        | Enable CVMFS volumes for WNs                             | boolean |
 | cvmfs.image                        | cloudpg/cvmfs                                                | CVMFS pod image                                          | string  |
 | cvmfs.tag                          | k8s                                                          | CVMFS pod image tag                                      | string  |
-| cvmfs.pullPolicy                   | ifNotPresent                                                 | CVMFS pod image pullPolicy                               | string  |
+| cvmfs.pullPolicy                   | IfNotPresent                                                 | CVMFS pod image pullPolicy                               | string  |
 | cvmfs.replicas                     | 1                                                            | CVMFS pod replicas                                       | int     |
 | cvmfs.repoList                     | cms.cern.ch oasis.cern.ch                                    | CVMFS repos to be mounted                                | strings |
 | cvmfs.defaultLocalConfig           | dummy content                                                | Set the content of CVMFS defaultLocal file               | string  |
