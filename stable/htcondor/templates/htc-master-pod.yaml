@@ -12,9 +12,9 @@ spec:
         app.kubernetes.io/name: htc-master
     spec:
       affinity:
-        {{- if .Values.htcMaster.nodeSelector }}
-        {{ .Values.htcMaster.nodeSelector }}
-        {{- end }}
+{{- if .Values.htcMaster.nodeSelector }}
+{{ .Values.htcMaster.nodeSelector | indent 8 }}
+{{- end }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:

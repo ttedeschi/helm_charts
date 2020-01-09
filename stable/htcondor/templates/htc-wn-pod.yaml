@@ -15,9 +15,9 @@ spec:
         nameservers:
         - 8.8.8.8
       affinity:
-        {{- if .Values.htcWn.nodeSelector }}
-        {{ .Values.htcWn.nodeSelector }}
-        {{- end }}
+{{- if .Values.htcWn.nodeSelector }}
+{{ .Values.htcWn.nodeSelector | indent 8 }}
+{{- end }}
       containers:
       - name: wn
         imagePullPolicy: {{ .Values.htcWn.pullPolicy }}

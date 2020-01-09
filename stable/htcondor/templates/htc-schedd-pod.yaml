@@ -12,9 +12,9 @@ spec:
         app.kubernetes.io/name: schedd
     spec:
       affinity:
-        {{- if .Values.htcSchedd.nodeSelector }}
-        {{ .Values.htcSchedd.nodeSelector }}
-        {{- end }}
+{{- if .Values.htcSchedd.nodeSelector }}
+{{ .Values.htcSchedd.nodeSelector | indent 8 }}
+{{- end }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:

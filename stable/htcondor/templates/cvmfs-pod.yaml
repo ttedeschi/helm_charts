@@ -30,9 +30,9 @@ spec:
                 operator: In
                 values:
                 - cvmfs
-        {{- if .Values.htcWn.nodeSelector }}
-        {{ .Values.htcWn.nodeSelector }}
-        {{- end }}
+{{- if .Values.htcWn.nodeSelector }}
+{{ .Values.htcWn.nodeSelector | indent 8 }}
+{{- end }}
       dnsPolicy: None
       dnsConfig:
         nameservers:
