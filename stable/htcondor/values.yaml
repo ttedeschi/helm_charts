@@ -23,7 +23,6 @@ htcMaster:
             operator: In
             values:
             - ccb
-        topologyKey: kubernetes.io/hostname
   # TODO: implement configMap for configuring each daemon
 
 htcSchedd:
@@ -44,7 +43,6 @@ htcSchedd:
             operator: In
             values:
             - schedd
-        topologyKey: kubernetes.io/hostname
   persistence:
     enabled: true
     size: 5Gi
@@ -62,7 +60,6 @@ htcSchedd:
               operator: In
               values:
               - schedd
-          topologyKey: kubernetes.io/hostname
   # TODO: implement configMap for mapfile
   # TODO: get rid of ttscache with secrets
 
@@ -88,7 +85,6 @@ htcWn:
             values:
             - ccb
             - schedd
-        topologyKey: kubernetes.io/hostname
 
 ttsCache:
   enabled: true
