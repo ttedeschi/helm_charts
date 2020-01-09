@@ -7,10 +7,10 @@ spec:
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
-  storageClassName: {{ .Values.htcSchedd.storageClass }}
+  storageClassName: {{ .Values.htcSchedd.persistence.storageClass }}
   resources:
     requests:
-      storage: "{{ .Values.htcSchedd.claimSize }}"
+      storage: "{{ .Values.htcSchedd.persistence.claimSize }}"
   selector:
     matchLabels:
       condor: sched

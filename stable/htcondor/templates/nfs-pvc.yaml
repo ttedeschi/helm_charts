@@ -9,5 +9,5 @@ spec:
   storageClassName: ""
   resources:
     requests:
-      storage: "{{.Values.nfs.claimSize}}"
+      storage: "{{.Values.nfs.persistence.claimSize}}"
 {{- end }}
