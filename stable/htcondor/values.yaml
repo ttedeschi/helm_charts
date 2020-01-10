@@ -51,7 +51,7 @@ htcSchedd:
     mountPath: /var/lib/condor/spool/
     options: |
       local:
-        path: " /tmp/"
+        path: "/tmp/"
       nodeAffinity:
         required:
           nodeSelectorTerms:
