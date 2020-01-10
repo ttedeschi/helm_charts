@@ -2,18 +2,28 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# condor collector host address
 condorHost:
+
+# condor ccb address
 ccbHost:
+
+# TTS proxy cache endpoint address and port
 proxyCacheHost:
 proxyCachePort: 30080
 
+# Condor collector configuration
 htcMaster:
   enabled: true
   image: dodasts/htcondor
   tag: fermi
   pullPolicy: IfNotPresent
   replicas: 1
+
+  # Condor network interface (address)
   networkInterface: ""
+
+  # CCB node affinity
   nodeSelector: |
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -25,15 +35,22 @@ htcMaster:
             - ccb
   # TODO: implement configMap for configuring each daemon
 
+# Condor collector configuration
 htcSchedd:
   enabled: true
   image: dodasts/htcondor
   tag: fermi
   pullPolicy: IfNotPresent
   replicas: 1
+
+  # Condor network interface (address)
   networkInterface: ""
+
+  # Schedd port range
   lowPort: 31024
   highPort: 32048
+
+  # Schedd node affinity
   nodeSelector: |
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -43,12 +60,20 @@ htcSchedd:
             operator: In
             values:
             - schedd
+
+  # Schedd persistence configuration
   persistence:
     enabled: true
     size: 5Gi
     claimSize: 4Gi
+
+    # local-storage for k8s, local-path for k3s
     storageClass: local-storage
+
+    # persistence of the schedd spool directory
     mountPath: /var/lib/condor/spool/
+
+    # mount options
     options: |
       local:
         path: "/tmp/"
@@ -63,18 +88,25 @@ htcSchedd:
   # TODO: implement configMap for mapfile
   # TODO: get rid of ttscache with secrets
 
+# Condor WorkerNode configuration
 htcWn:
   image: dodasts/htcondor
   tag: fermi
   pullPolicy: IfNotPresent
   replicas: 1
+
+  # Resource limits and requests
   cpu:
     request: 1
     limit: 1.5
   ram:
     request: 2048Mi
     limit: 2500Mi
+
+  # Condor slot type
   slotType: cpus=1, mem=2000
+
+  # Worker node affinity
   nodeSelector: |
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -86,37 +118,51 @@ htcWn:
             - ccb
             - schedd
 
+# Token Translation service cache configuration
 ttsCache:
   enabled: true
   image: dodasts/ttscache
   tag: v1.1.0-dodas
   pullPolicy: IfNotPresent
   replicas: 1
+
+  # IAM credential for token translation
   iamToken:
   iamClientId:
   iamClientSecret:
+
+  # TO BE IMPLEMENTED: SCIM read client for automatic condor user mapping
   iamScimClientId:
   iamScimSecret:
   iamMapGroup: ALL
+
+  # TTS endpoint configuration
   proxyAudience: "https://dodas-tts.cloud.cnaf.infn.it"
   proxyTTS: "https://dodas-tts.cloud.cnaf.infn.it"
   proxyIAMEndpoint: "https://dodas-iam.cloud.cnaf.infn.it/"
   proxyCredentialEndpoint: "https://dodas-tts.cloud.cnaf.infn.it/api/v2/iam/credential"
 
+# NFS volume mount on WN configuration
 nfs:
   enabled: false
   size: 1Gi
   claimSize: 950Mi
+  # Put here the nfs master address
   server: DUMMY
   path: "/"
 
+# CVMFS mount on slave: configuration
 cvmfs:
   enabled: false
   image: cloudpg/cvmfs
   tag: k8s
   pullPolicy: IfNotPresent
   replicas: 1
+
+  # List of repos to be mounted
   repoList: cms.cern.ch oasis.cern.ch
+
+  # default.local file content
   defaultLocalConfig: |-
     property.1=value-1
     property.2=value-2
