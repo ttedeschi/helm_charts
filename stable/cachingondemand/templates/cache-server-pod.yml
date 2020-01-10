@@ -39,12 +39,12 @@ spec:
       {{- if .Values.gsi.vo }}
       - name: vomses
         configMap:
-        name: vomses-config
-      {{ end }}
+          name: vomses-config
+      {{- end }}
       - name: certs
         secret:
-        secretName: certs
-        defaultMode: 256
+          secretName: certs
+          defaultMode: 256
       {{- end }}
       hostNetwork: true
       containers:
