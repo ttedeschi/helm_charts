@@ -29,19 +29,19 @@ spec:
         - name: IAM_CLIENT_SECRET
           value: "{{ .Values.ttsCache.iamClientSecret }}"
         - name: IAM_MAP_CLIENT_ID
-          value: "{{ .Values.iamScimClientId }}"
+          value: "{{ .Values.ttsCache.iamScimClientId }}"
         - name: IAM_MAP_CLIENT_SECRET
-          value: "{{ .Values.iamScimSecret }}"
+          value: "{{ .Values.ttsCache.iamScimSecret }}"
         - name: IAM_MAP_GROUP
-          value: "{{ .Values.iamScimGroup }}"
+          value: "{{ .Values.ttsCache.iamScimGroup }}"
         - name: PROXY_AUDIENCE
-          value:  "{{ .Values.proxyAudience }}"
+          value:  "{{ .Values.ttsCache.proxyAudience }}"
         - name: PROXY_TTS
-          value: "{{ .Values.proxyTTS }}"
+          value: "{{ .Values.ttsCache.proxyTTS }}"
         - name: PROXY_IAM_ENDPOINT
-          value:  "{{ .Values.proxyIAMEndpoint }}"
+          value:  "{{ .Values.ttsCache.proxyIAMEndpoint }}"
         - name: PROXY_CREDENTIAL_ENDPOINT
-          value: "{{ .Values.proxyCredentialEndpoint }}"
+          value: "{{ .Values.ttsCache.proxyCredentialEndpoint }}"
         - name: PROXY_LOCAL_CACHE_EXPIRATION_TIME
           value: "86400"
         - name: PROXY_LOCK_FILE_AGE
