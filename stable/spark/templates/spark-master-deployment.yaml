@@ -62,7 +62,8 @@ spec:
     - "{{ .Values.externalIp.ips }}"
   {{- end}}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
+#apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ .Values.master.name }}
@@ -100,7 +101,8 @@ spec:
       containers:
         - name: {{ .Values.master.name }}
           image: "{{ .Values.master.image }}:{{ .Values.master.imageTag }}"
-          args: ["master"]
+          #args: ["master"] 
+          args: ["/opt/spark/bin/spark-class","org.apache.spark.deploy.master.Master", "--ip", "localhost", "--port", "7077", "--webui-port", "8080"]
           ports:
             - containerPort: {{ .Values.master.containerPort }}
             - containerPort: {{ .Values.webUi.containerPort }}
