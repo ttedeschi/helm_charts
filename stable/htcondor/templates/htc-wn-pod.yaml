@@ -51,22 +51,22 @@ spec:
             memory: "{{ .Values.htcWn.ram.request }}"
             cpu: "{{ .Values.htcWn.cpu.request }}"
         volumeMounts:
-{{- if .Values.nfs.enabled -}}
+{{- if .Values.nfs.enabled }}
         - name: nfs
           mountPath: "/mnt"
 {{- end }}
-{{- if .Values.cvmfs.enabled -}}
+{{- if .Values.cvmfs.enabled }}
         - name: cvmfs
           mountPath: "/cvmfs"
 {{- end }}
 
       volumes:
-{{- if .Values.nfs.enabled -}}
+{{- if .Values.nfs.enabled }}
       - name: nfs
         persistentVolumeClaim:
           claimName: nfs
 {{- end }}
-{{- if .Values.cvmfs.enabled -}}
+{{- if .Values.cvmfs.enabled }}
       - name: cvmfs
         hostPath:
           path: /cvmfs

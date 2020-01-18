@@ -41,6 +41,7 @@ spec:
                 operator: In
                 values:
                 - cvmfs
+            topologyKey: kubernetes.io/hostname
 {{- if .Values.htcWn.nodeSelector }}
 {{ .Values.htcWn.nodeSelector | indent 8 }}
 {{- end }}
@@ -66,8 +67,10 @@ spec:
           mountPropagation: Bidirectional
         - mountPath: "/etc/cvmfs/"
           name: default-local
+        {{- if .Values.cvmfs.privKey }}
         - mountPath: "/etc/cvmfs/keys"
-          name: privKeys
+          name: privkeys
+        {{- end }}
       restartPolicy: Always
       volumes:
       - name: cvmfs
@@ -78,11 +81,10 @@ spec:
         configMap: 
           name: default-local
       {{- if .Values.cvmfs.privKey }}
-      - name: privKeys
-        configMap: 
-          secret:
-            secretName: secrets
-            defaultMode: 256
+      - name: privkeys
+        secret:
+          secretName: secrets
+          defaultMode: 256
       {{- end}}
         # TODO CONFIGMAP
   selector:
