@@ -86,4 +86,5 @@ helm install htcondor dodas/htcondor
 | cvmfs.pullPolicy                   | IfNotPresent                                                 | CVMFS pod image pullPolicy                               | string  |
 | cvmfs.replicas                     | 1                                                            | CVMFS pod replicas                                       | int     |
 | cvmfs.repoList                     | cms.cern.ch oasis.cern.ch                                    | CVMFS repos to be mounted                                | strings |
+| cvmfs.privKey          | dummy content                                                | Set the content of CVMFS cvmfs keys               | string  |
 | cvmfs.defaultLocalConfig           | dummy content                                                | Set the content of CVMFS defaultLocal file               | string  |
