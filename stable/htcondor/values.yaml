@@ -164,8 +164,7 @@ cvmfs:
 
   privKey:
   - "spiga.local.repo.pub": |-
-    -----BEGIN PUBLIC KEY-----
-    -----END PUBLIC KEY-----
+    asd
 
   # default.local file content
   defaultLocalConfig: |-
