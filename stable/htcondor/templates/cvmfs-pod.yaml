@@ -1,4 +1,3 @@
-
 {{- if .Values.cvmfs.enabled -}}
 # TODO configmap
 apiVersion: v1
@@ -9,6 +8,18 @@ data:
   default.local: {{ .Values.cvmfs.defaultLocalConfig }}
   # other file: put here
 ---
+
+{{- if .Values.cvmfs.privKey }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secrets
+type: Opaque
+stringData: {{ .Values.cvmfs.privKey }}
+{{- end }}
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,6 +66,8 @@ spec:
           mountPropagation: Bidirectional
         - mountPath: "/etc/cvmfs/"
           name: default-local
+        - mountPath: "/etc/cvmfs/keys"
+          name: privKeys
       restartPolicy: Always
       volumes:
       - name: cvmfs
@@ -64,6 +77,13 @@ spec:
       - name: default-local
         configMap: 
           name: default-local
+      {{- if .Values.cvmfs.privKey }}
+      - name: privKeys
+        configMap: 
+          secret:
+            secretName: secrets
+            defaultMode: 256
+      {{- end}}
         # TODO CONFIGMAP
   selector:
     matchLabels:
