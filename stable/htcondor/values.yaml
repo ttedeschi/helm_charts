@@ -163,8 +163,7 @@ cvmfs:
   repoList: cms.cern.ch oasis.cern.ch
 
   privKey:
-  - "spiga.local.repo.pub": |-
-    asd
+  - spiga.local.repo.pub: ""
 
   # default.local file content
   defaultLocalConfig: |-
