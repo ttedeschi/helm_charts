@@ -68,7 +68,7 @@ spec:
           name: cvmfs
           mountPropagation: Bidirectional
         - mountPath: "/etc/cvmfs/config.d"
-          name: config.d
+          name: configd
         {{- if .Values.cvmfs.privKey }}
         - mountPath: "/etc/cvmfs/keys"
           name: privkeys
@@ -79,7 +79,7 @@ spec:
         hostPath:
           path: "/cvmfs"
           type: DirectoryOrCreate
-      - name: config.d
+      - name: configd
         configMap: 
           name: default-local
       {{- if .Values.cvmfs.privKey }}
