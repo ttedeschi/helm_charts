@@ -4,7 +4,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: default-local
-data: {{ .Values.cvmfs.defaultLocalConfig }}
+data: 
+{{ .Values.cvmfs.defaultLocalConfig | indent 2 }}
   # other file: put here
 ---
 
@@ -14,7 +15,8 @@ kind: Secret
 metadata:
   name: secrets
 type: Opaque
-stringData: {{ .Values.cvmfs.privKey }}
+stringData: 
+{{ .Values.cvmfs.privKey | indent 2}}
 {{- end }}
 
 ---
