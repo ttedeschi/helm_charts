@@ -1,5 +1,6 @@
 {{- if .Values.cvmfs.enabled -}}
 # TODO configmap
+# DO it without passing string, but with parsing dict!
 apiVersion: v1
 kind: ConfigMap
 metadata:
