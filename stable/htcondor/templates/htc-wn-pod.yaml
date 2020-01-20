@@ -18,6 +18,22 @@ spec:
 {{- if .Values.htcWn.nodeSelector }}
 {{ .Values.htcWn.nodeSelector | indent 8 }}
 {{- end }}
+        {{- if or .Values.cvmfs.enabled .Values.nfs.enabled }}
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                {{- if .Values.cvmfs.enabled }}
+                - cvmfs
+                {{- end }}
+                {{- if .Values.nfs.enabled }}
+                - nfs
+                {{- end }}
+            topologyKey: kubernetes.io/hostname
+        {{- end }}
       containers:
       - name: wn
         imagePullPolicy: {{ .Values.htcWn.pullPolicy }}
