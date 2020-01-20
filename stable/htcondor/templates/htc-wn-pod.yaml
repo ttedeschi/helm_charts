@@ -29,9 +29,6 @@ spec:
                 {{- if .Values.cvmfs.enabled }}
                 - cvmfs
                 {{- end }}
-                {{- if .Values.nfs.enabled }}
-                - nfs
-                {{- end }}
             topologyKey: kubernetes.io/hostname
         {{- end }}
       containers:
