@@ -53,10 +53,12 @@ spec:
         livenessProbe:
           exec:
             command:
-            - voms-proxy-info
-            - --file
-            - /root/gwms_proxy
-            - --exists
+            - cat
+            - /cvmfs/spiga.local.repo/test-content
+            #- voms-proxy-info
+            #- --file
+            #- /root/gwms_proxy
+            #- --exists
           initialDelaySeconds: 300
           periodSeconds: 600
         resources:
@@ -74,6 +76,7 @@ spec:
 {{- if .Values.cvmfs.enabled }}
         - name: cvmfs
           mountPath: "/cvmfs"
+          #mountPropagation: Bidirectional
 {{- end }}
 
       volumes:
