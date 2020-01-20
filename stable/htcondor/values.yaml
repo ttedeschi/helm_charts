@@ -122,7 +122,7 @@ htcWn:
 ttsCache:
   enabled: true
   image: dodasts/ttscache
-  tag: v1.1.0-dodas
+  tag: v1.1.4-dodas
   pullPolicy: IfNotPresent
   replicas: 1
 
