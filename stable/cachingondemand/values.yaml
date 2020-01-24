@@ -4,23 +4,23 @@
 
 # ExternalIps to be used for service exposition
 externalIp:
-  enabled: false 
+  enabled: false
   ips: []
 
 # Enable this to activate gsi authentication
 gsi:
   enabled: false
-  
+
   # authorized VOs
   vo:
-  
+
   # generate voms files configMap
   vomses: []
   # - filename: ""
   #   content: |
   #     mymultine
   #     file
-  
+
   # gsi certificates
   cacheCert: {}
   #  cert: ""
@@ -54,7 +54,7 @@ cache:
   persistence:
     enabled: true
     cacheHostPath: /data/xrd
-    volumeClaim: 
+    volumeClaim:
       enabled: false
       type: ""
       name: ""
@@ -94,7 +94,7 @@ redirector:
     type: NodePort
     xrootd:
       port: 1294
-      targetPort: 31294 
+      targetPort: 31294
       nodePort: 31294
     cms:
       port: 1213
@@ -118,7 +118,7 @@ proxy:
   replicas: 1
 
   service:
-    type: NodePort 
+    type: NodePort
     xrootd:
       port: 1394
       targetPort: 31394

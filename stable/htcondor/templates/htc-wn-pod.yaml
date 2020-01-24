@@ -75,6 +75,10 @@ spec:
           mountPath: "/cvmfs"
           #mountPropagation: Bidirectional
 {{- end }}
+{{- if .Values.htcWn.siteConfCMS.enabled }}
+        - name: siteconfig
+          mountPath: /etc/cvmfs/SITECONF/
+{{- end }}
 
       volumes:
 {{- if .Values.nfs.enabled }}
@@ -87,6 +91,11 @@ spec:
         hostPath:
           path: /cvmfs
           type: Directory
+{{- end }}
+{{- if .Values.htcWn.siteConfCMS.enabled }}
+      - name: siteconfig
+        configMap:
+          name: siteconfig
 {{- end }}
 
   selector:

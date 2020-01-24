@@ -26,8 +26,8 @@ helm install htcondor dodas/htcondor
 | ---------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------- | ------- |
 | condorHost                         | null                                                         | Private or public address of the HTCondor master         | string  |
 | ccbHost                            | null                                                         | Public address of the HTCondor master                    | string  |
-| proxyCacheHost                     | null                                                         | Usually put this as the address of the k8s master node   | string  |
-| proxyCachePort                     | 30080                                                        | Enable GSI authentication                                | int     |
+| proxyCacheHost                     | null                                                         | Address for Token2proxy translation service Usually put this as the address of the k8s master node   | string  |
+| proxyCachePort                     | 30080                                                        | Exposed port for Token2proxy translation service 
 | htcMaster.enabled                  | true                                                         | Enable HTCondor master deployment                        | boolean |
 | htcMaster.image                    | dodasts/htcondor                                             | HTCondor master docker image                             | string  |
 | htcMaster.tag                      | fermi                                                        | HTCondor master docker image tag                         | string  |
@@ -60,6 +60,8 @@ helm install htcondor dodas/htcondor
 | htcWn.ram.limit                    | 2500Mi                                                       | HTCondor WorkerNode k8s memory limit                     | string  |
 | htcWn.slotType                     | cpus=1, mem=2000                                             | HTCondor WorkerNode condor slot type                     | string  |
 | htcWn.nodeSelector                 | see [values.yaml](values.yaml)                               | HTCondor WorkerNode node affinity                        | strings |
+| htcWn.siteConfCMS.enabled                 | false                               | enable HTCondor WorkerNode configuration for CMS experiment                        | boolean |
+| htcWn.siteConfCMS.files                 | see [values.yaml](values.yaml)                               | HTCondor WorkerNode configuration files for CMS experiment                        | list |
 | ttsCache.enabled                   | true                                                         | Enable TTS cache deployment                              | boolean |
 | ttsCache.image                     | dodasts/ttscache                                             | TTS cache docker image                                   | string  |
 | ttsCache.tag                       | v1.1.0-dodas                                                 | TTS cache docker image tag                               | string  |

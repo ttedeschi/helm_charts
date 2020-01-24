@@ -1,11 +1,10 @@
-{{- if .Values.gsi.vomses }}
-
+{{- if .Values.htcWn.siteConfCMS.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vomses-config
+  name: siteconfig
 data:
-  {{- range  .Values.gsi.vomses}}
+  {{- range  .Values.htcWn.siteConfCMS.files }}
   {{ .filename }}: |
     {{ .content }}
   {{- end }}
