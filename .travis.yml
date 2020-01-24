@@ -23,6 +23,7 @@ install:
     - /tmp/get-helm-3
     - export PATH=$PATH:/tmp
     - wget https://github.com/helm/chart-testing/releases/download/v2.4.0/chart-testing_2.4.0_linux_amd64.tar.gz 
+    - mkdir /tmp/ct
     - tar xzvf chart-testing_2.4.0_linux_amd64.tar.gz -C /tmp/ct
     - sudo pip install yamale
     - sudo mv /tmp/ct /bin/
