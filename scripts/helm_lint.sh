@@ -1,1 +1,1 @@
-ct lint --chart-dirs stable --check-version-increment false
+ct lint --chart-dirs stable
