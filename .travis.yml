@@ -24,7 +24,6 @@ install:
     - export PATH=$PATH:/tmp
     - wget https://github.com/helm/chart-testing/releases/download/v2.4.0/chart-testing_2.4.0_linux_amd64.tar.gz 
     - tar xzvf chart-testing_2.4.0_linux_amd64.tar.gz
-    - apt install -y yamllint
     - pip install --user yamale
     - sudo mv ct /bin/
     - sudo mkdir /etc/ct
