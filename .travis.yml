@@ -26,9 +26,9 @@ install:
     - mkdir /tmp/ct
     - tar xzvf chart-testing_2.4.0_linux_amd64.tar.gz -C /tmp/ct
     - sudo pip install yamale
-    - sudo mv /tmp/ct /bin/
+    - sudo mv /tmp/ct/ct /bin/
     - sudo mkdir /etc/ct
-    - sudo mv /tmp/etc/* /etc/ct/
+    - sudo mv /tmp/ct/etc/* /etc/ct/
 
 script:
     - ./scripts/helm_lint.sh
