@@ -1,0 +1,17 @@
+{{- if .Values.squid.enabled }}
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: squid-service
+spec:
+  type: NodePort 
+  selector:
+    app.kubernetes.io/name: squid
+  ports:
+  - protocol: TCP
+    name: squid
+    port: 3128
+    targetPort: {{ .Values.squid.port }}
+
+{{- end }}
