@@ -199,9 +199,9 @@ ttsCache:
 # Enable Squid server
 squid:
   enabled: false
-  image:
-  tag:
-  pullPolicy:
+  image: dodasts/squid
+  tag: v1.1.0
+  pullPolicy: IfNotPresent
   replicas: 1
 
   # Service Port
