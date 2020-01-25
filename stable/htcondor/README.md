@@ -90,3 +90,8 @@ helm install htcondor dodas/htcondor
 | cvmfs.repoList                     | cms.cern.ch oasis.cern.ch                                    | CVMFS repos to be mounted                                | strings |
 | cvmfs.privKey          | dummy content                                                | Set the content of CVMFS cvmfs keys               | string  |
 | cvmfs.defaultLocalConfig           | dummy content                                                | Set the content of CVMFS defaultLocal file               | string  |
+| squid.enabled                   | true                                                         | Enable squid deployment                              | boolean |
+| squid.image                     | dodasts/squid                                          | squid docker image                                   | string  |
+| squid.tag                       | v1.1.0-dodas                                                 | squid docker image tag                               | string  |
+| squid.pullPolicy                | IfNotPresent                                                 | squid image pull policy                              | string  |
+| squid.replicas                  | 1                                                            | squid replicas                                       | int     |
