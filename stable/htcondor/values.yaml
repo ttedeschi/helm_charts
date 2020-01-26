@@ -122,7 +122,9 @@ htcWn:
   siteConfCMS:
     enabled: false
     files: []
-      # - filename: JobConfig/site-local-config.xml
+      # - name: sitelocal
+      #   path:  JobConfig
+      #   filename: site-local-config.xml
       #   content: |
       #     <site-local-config>
       #     <site name={{cms_config_cms_local_site}}>
@@ -156,7 +158,9 @@ htcWn:
       #     </site>
       #     </site-local-config>
 
-      # - filename: PhEDEx/storage.xml
+      # - name: storage
+      #   path: PhEDEx
+      #   filename: PhEDEx/storage.xml
       #   content: |
       #     <storage-mapping>
       #     <!-- AAA xrootd read rule -->

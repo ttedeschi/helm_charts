@@ -1,12 +1,13 @@
 {{- if .Values.htcWn.siteConfCMS.enabled }}
+{{- range  .Values.htcWn.siteConfCMS.files }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: siteconfig
+  name: {{ .name }} 
 data:
-{{- range  .Values.htcWn.siteConfCMS.files }}
 {{ .filename | indent 2 }}: |
 {{ .content | indent 4 }}
+
 {{- end }}
 
 {{- end }}
