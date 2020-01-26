@@ -4,9 +4,9 @@ kind: ConfigMap
 metadata:
   name: siteconfig
 data:
-  {{- range  .Values.htcWn.siteConfCMS.files }}
-  {{ .filename }}: |
-    {{ .content }}
-  {{- end }}
+{{- range  .Values.htcWn.siteConfCMS.files }}
+{{ .filename | indent 2 }}: |
+{{ .content | indent 4 }}
+{{- end }}
 
 {{- end }}
