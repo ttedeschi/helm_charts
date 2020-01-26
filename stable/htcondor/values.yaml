@@ -121,7 +121,12 @@ htcWn:
   # ConfigMap site-Local
   siteConfCMS:
     enabled: false
-    files: []
+    files:
+      - name: sitetest
+        path: test
+        filename: test.txt
+        content: |
+          test
       # - name: sitelocal
       #   path:  JobConfig
       #   filename: site-local-config.xml

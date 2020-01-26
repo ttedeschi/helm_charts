@@ -96,7 +96,7 @@ spec:
 {{- end }}
 {{- if .Values.htcWn.siteConfCMS.enabled }}
 {{- range  .Values.htcWn.siteConfCMS.files }}
-      - name: {{ . name }}
+      - name: {{ .name }}
         configMap:
           name: {{ .name }}
 {{- end }}

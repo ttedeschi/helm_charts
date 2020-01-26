@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: "8.4.3"
 description: A Helm chart for HTCondor on Kubernetes
 name: htcondor
-version: 1.2.3
+version: 1.2.4
 icon: https://research.cs.wisc.edu/htcondor/images/HTCondor_wiki_logo_small.png
 maintainers:
   - name: dciangot
