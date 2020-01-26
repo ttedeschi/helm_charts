@@ -8,6 +8,8 @@ data:
 {{ .filename | indent 2 }}: |
 {{ .content | indent 4 }}
 
+---
+
 {{- end }}
 
 {{- end }}
