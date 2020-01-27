@@ -214,7 +214,7 @@ squid:
   replicas: 1
 
   # Service Port
-  port: 30128
+  port: 31128
 
 # NFS volume mount on WN configuration
 nfs:
