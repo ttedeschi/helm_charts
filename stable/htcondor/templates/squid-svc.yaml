@@ -12,6 +12,7 @@ spec:
   - protocol: TCP
     name: squid
     port: 3128
-    targetPort: {{ .Values.squid.port }}
+    targetPort: 3128
+    nodePort: {{ .Values.squid.port }}
 
 {{- end }}
