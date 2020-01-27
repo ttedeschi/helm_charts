@@ -15,16 +15,19 @@ data:
 ---
 
 {{- if .Values.cvmfs.privKey }}
+{{- range   .Values.cvmfs.privKey }}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: secrets
+  name: {{ .name}}
 type: Opaque
-stringData: 
-{{ .Values.cvmfs.privKey | indent 2}}
+stringData:
+  {{ .filename }}: |
+{{ .content | indent 4}}
 {{- end }}
 
 ---
+{{- end }}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -74,8 +77,10 @@ spec:
         - mountPath: "/etc/cvmfs/config.d"
           name: configd
         {{- if .Values.cvmfs.privKey }}
-        - mountPath: "/etc/cvmfs/keys"
-          name: privkeys
+        {{- range   .Values.cvmfs.privKey }}
+        - mountPath: "/etc/cvmfs/keys/{{ .path }}"
+          name: {{ .name }}
+        {{- end }}
         {{- end }}
       restartPolicy: Always
       volumes:
@@ -87,10 +92,12 @@ spec:
         configMap: 
           name: default-local
       {{- if .Values.cvmfs.privKey }}
-      - name: privkeys
+      {{- range   .Values.cvmfs.privKey }}
+      - name: {{ .name }}
         secret:
-          secretName: secrets
+          secretName: {{ .name }}
           defaultMode: 511
+      {{- end}}
       {{- end}}
         # TODO CONFIGMAP
   selector:
