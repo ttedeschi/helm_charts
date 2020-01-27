@@ -11,10 +11,6 @@ spec:
       labels:
         app.kubernetes.io/name: tts
     spec: 
-      affinity:
-{{- if .Values.htcMaster.nodeSelector }}
-{{ .Values.htcMaster.nodeSelector | indent 8 }}
-{{- end }}
       dnsConfig:
         nameservers:
         - 8.8.8.8
