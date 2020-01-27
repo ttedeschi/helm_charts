@@ -1,13 +1,17 @@
 {{- if .Values.cvmfs.enabled }}
 # TODO configmap
 # DO it without passing string, but with parsing dict!
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: default-local
 data: 
-{{ .Values.cvmfs.defaultLocalConfig | indent 2 }}
-  # other file: put here
+{{- range   .Values.cvmfs.defaultLocalConfig }}
+  {{ .file }}: |
+{{ .content | indent 4 }}
+{{- end }}
+
 ---
 
 {{- if .Values.cvmfs.privKey }}
