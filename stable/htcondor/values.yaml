@@ -236,18 +236,18 @@ cvmfs:
   # List of repos to be mounted
   repoList: cms.cern.ch oasis.cern.ch
 
-  privKey:
-    - name: spiga
-      path: spiga.local.repo
-      filename: spiga.local.repo.pub
-      content: |
-        test
+  privKey: []
+  #  - name: spiga
+  #    path: spiga.local.repo
+  #    filename: spiga.local.repo.pub
+  #    content: |
+  #      test
 
   # default.local file content
-  defaultLocalConfig:
-    - file: spiga.local.repo.conf
-      content: |
-        spiga.local.repo.conf: |-
-          property.1=value-1
-          property.2=value-2
-          property.3=value-3
+  defaultLocalConfig: []
+  #  - file: spiga.local.repo.conf
+  #    content: |
+  #      spiga.local.repo.conf: |-
+  #        property.1=value-1
+  #        property.2=value-2
+  #        property.3=value-3
