@@ -209,7 +209,7 @@ ttsCache:
 squid:
   enabled: false
   image: dodasts/squid
-  tag: v1.1.0
+  tag: v1.1.0-dodas
   pullPolicy: IfNotPresent
   replicas: 1
 
