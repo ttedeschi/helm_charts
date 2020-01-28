@@ -51,7 +51,7 @@ spec:
             - voms-proxy-info
             - --file
             - /tmp/userproxy.pem
-            - --valid
+            - -e
           initialDelaySeconds: 300
           periodSeconds: 600
         volumeMounts:
