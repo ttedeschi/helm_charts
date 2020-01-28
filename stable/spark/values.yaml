@@ -24,8 +24,8 @@ externalIp:
 master:
     name: master
     namespace: default
-    image: cloudpg/spark-py
-    imageTag: dodas-2.4.3-bigdl
+    image: dodasts/spark-k8s-py
+    imageTag: v2.0.0-rc1
     replicas: 1
     component: spark-master
     cpu: 100m
@@ -39,8 +39,8 @@ master:
         nodePort: 30888
         token: testme
         port: 8888
-        image: cloudpg/spark-notebook
-        tag: k8s-py3.6
+        image: dodasts/pyspark-notebook
+        tag: v2.0.0-rc1
 
 
 # WebUi service configuration values
