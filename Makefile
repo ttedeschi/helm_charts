@@ -4,9 +4,9 @@ COMMIT_MSG ?= "Doc update"
 
 CURRENT_BRANCH = "master" 
 
-.PHONY: build-helm
+.PHONY: build-helm-repo
 
-all: build-helm
+all: build-helm-repo
 
 help:
 	@echo "Available commands:\n"

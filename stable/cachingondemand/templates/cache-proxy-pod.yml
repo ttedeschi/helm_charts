@@ -76,7 +76,7 @@ spec:
           - --vo 
           - "{{ .Values.gsi.vo }}"
           {{- end}}
-        image: "{{ .Values.cache.repository }}:{{ .Values.cache.tag }}"
+        image: "{{ .Values.cache.image }}:{{ .Values.cache.tag }}"
         volumeMounts:
         - name: xcache-creds
           mountPath: /tmp/

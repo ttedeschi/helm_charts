@@ -1,74 +1,50 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: tts-svc
-spec:
-  type: NodePort
-  selector:
-    app: tts
-  ports:
-  - protocol: TCP
-    name: tts
-    port: 8080
-    targetPort: 80
-    nodePort: {{ .Values.PROXY_CACHE_Port }}
-
----
+{{- if .Values.ttsCache.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tts-pod
   labels:
-    app: tts
+    app.kubernetes.io/name: tts-pod
 spec:
   template:
     metadata:
       labels:
-        app: tts
+        app.kubernetes.io/name: tts
     spec: 
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: condor
-                operator: In
-                values:
-                - ccb
       dnsConfig:
         nameservers:
         - 8.8.8.8
       containers: 
       - name: tts-cache
-        imagePullPolicy: Always
+        imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
         env: 
         - name: IAM_TOKEN
-          value:  "{{ .Values.IAM_TOKEN }}"
+          value:  "{{ .Values.ttsCache.iamToken }}"
         - name: IAM_CLIENT_ID
-          value: "{{ .Values.IAM_CLIENT_ID}}"
+          value: "{{ .Values.ttsCache.iamClientId }}"
         - name: IAM_CLIENT_SECRET
-          value: "{{ .Values.IAM_CLIENT_SECRET}}"
+          value: "{{ .Values.ttsCache.iamClientSecret }}"
         - name: IAM_MAP_CLIENT_ID
-          value: "{{ .Values.IAM_SCIM_CLIENT_ID}}"
+          value: "{{ .Values.ttsCache.iamScimClientId }}"
         - name: IAM_MAP_CLIENT_SECRET
-          value: "{{ .Values.IAM_SCIM_SECRET}}"
+          value: "{{ .Values.ttsCache.iamScimSecret }}"
         - name: IAM_MAP_GROUP
-          value: "{{ .Values.IAM_MAP_GROUP}}"
+          value: "{{ .Values.ttsCache.iamScimGroup }}"
         - name: PROXY_AUDIENCE
-          value:  "{{ .Values.PROXY_AUDIENCE}}"
+          value:  "{{ .Values.ttsCache.proxyAudience }}"
         - name: PROXY_TTS
-          value: "{{ .Values.PROXY_TTS}}"
+          value: "{{ .Values.ttsCache.proxyTTS }}"
         - name: PROXY_IAM_ENDPOINT
-          value:  "{{ .Values.PROXY_IAM_ENDPOINT}}"
+          value:  "{{ .Values.ttsCache.proxyIAMEndpoint }}"
         - name: PROXY_CREDENTIAL_ENDPOINT
-          value: "{{ .Values.PROXY_CREDENTIAL_ENDPOINT}}"
+          value: "{{ .Values.ttsCache.proxyCredentialEndpoint }}"
         - name: PROXY_LOCAL_CACHE_EXPIRATION_TIME
           value: "86400"
         - name: PROXY_LOCK_FILE_AGE
           value: "20"
         - name: PROXY_CACHE_DIR
           value: "/tmp"
-        image:  "{{ .Values.tts_image}}"
+        image:  "{{ .Values.ttsCache.image }}:{{ .Values.ttsCache.tag }}"
         livenessProbe:
           exec:
             command:
@@ -87,6 +63,7 @@ spec:
           path: /tmp
   selector:
     matchLabels:
-      app: tts 
+      app.kubernetes.io/name: tts
 
   replicas: 1
+{{- end }}

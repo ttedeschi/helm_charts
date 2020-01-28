@@ -2,9 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-
-
-#ClusterRoleBinding parameters
+# ClusterRoleBinding parameters
 clusterRoleBinding:
     name: default-pyspark
     namespace: default
@@ -20,7 +18,7 @@ clusterRoleBinding:
 # ExternalIps to be used for service exposition
 externalIp:
     enabled: true
-    ips: 192.168.65.3 
+    ips: 192.168.65.3
 
 # Spark master deployment and service configuration values
 master:
@@ -57,13 +55,13 @@ master:
 
 # WebUi service configuration values
 webUi:
-  name: webui
-  namespace: default
-  servicePort: 8080
-  containerPort: 8080
-  nodePort: 30808
-  serviceType: NodePort
+    name: webui
+    namespace: default
+    servicePort: 8080
+    containerPort: 8080
+    nodePort: 30808
+    serviceType: NodePort
 
 # Where to store jupyter data
-hostPath: 
+hostPath:
     path: /tmp

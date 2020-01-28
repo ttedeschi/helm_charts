@@ -1,46 +1,42 @@
+{{- if .Values.htcMaster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ccb-pod
   labels:
-    app: ccb
+    app.kubernetes.io/name: htc-master-pod
 spec:
   template:
     metadata:
       labels:
-        app: ccb
+        app.kubernetes.io/name: htc-master
     spec:
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: condor
-                operator: In
-                values:
-                - ccb
+{{- if .Values.htcMaster.nodeSelector }}
+{{ .Values.htcMaster.nodeSelector | indent 8 }}
+{{- end }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-              - key: app
+              - key: app.kubernetes.io/name
                 operator: In
                 values:
-                - ccb 
+                - htc-master 
             topologyKey: kubernetes.io/hostname 
       hostNetwork: true
       containers:
       - name: ccb
-        imagePullPolicy: Always
+        imagePullPolicy: {{ .Values.htcMaster.pullPolicy }}
         args:
         - master 
         env:
         - name: NETWORK_INTERFACE
-          value:   "{{ .Values.CONDOR_HOST }}"          
+          value:   "{{ .Values.htcMaster.networkInterface }}"          
         - name: CONDOR_HOST 
-          value:   "{{ .Values.CONDOR_HOST }}"
+          value:   "{{ .Values.condorHost  }}"
         - name: PROXY_CACHE 
-          value: "{{ .Values.PROXY_CACHE }}:{{ .Values.PROXY_CACHE_Port }}"
+          value: "{{ .Values.proxyCacheHost }}:{{ .Values.proxyCachePort }}"
         - name: SEC_DAEMON_AUTHENTICATION_METHODS
           value: CLAIMTOBE
         - name: SEC_CLIENT_AUTHENTICATION_METHODS
@@ -52,7 +48,7 @@ spec:
         - name: CONDOR_DAEMON_LIST
           value: COLLECTOR, MASTER, NEGOTIATOR, SCHEDD, STARTD
 
-        image: "{{ .Values.condor_image }}"
+        image: "{{ .Values.htcMaster.image }}:{{ .Values.htcMaster.tag }}"
         livenessProbe:
           exec:
             command:
@@ -64,8 +60,7 @@ spec:
           periodSeconds: 600
   selector:
     matchLabels:
-      app: ccb 
+      app.kubernetes.io/name: htc-master
 
-  replicas: 1
-
-
+  replicas: {{ .Values.htcMaster.replicas }}
+{{- end }}

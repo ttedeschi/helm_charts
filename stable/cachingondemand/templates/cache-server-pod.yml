@@ -27,24 +27,24 @@ spec:
       volumes:
       {{- if .Values.cache.persistence.enabled }}
       - name: xcache-data
-        {{- if not .Values.cache.persistence.volumeClaim }}
+        {{- if not .Values.cache.persistence.volumeClaim.enabled }}
         hostPath:
           path: {{ .Values.cache.cachePath }}
-        {{- end}}
+        {{- end }}
         # PVC TO BE IMPLEMENTED
       {{- end }}
       {{- if .Values.gsi.enabled }}
       - name: xcache-creds
-         emptyDir: {}
+        emptyDir: {}
       {{- if .Values.gsi.vo }}
       - name: vomses
         configMap:
-        name: vomses-config
-      {{ end }}
+          name: vomses-config
+      {{- end }}
       - name: certs
         secret:
-        secretName: certs
-        defaultMode: 256
+          secretName: certs
+          defaultMode: 256
       {{- end }}
       hostNetwork: true
       containers:

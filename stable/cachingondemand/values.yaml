@@ -4,24 +4,23 @@
 
 # ExternalIps to be used for service exposition
 externalIp:
-  enabled: false 
-  ips:
-  - 192.168.0.123
+  enabled: false
+  ips: []
 
 # Enable this to activate gsi authentication
 gsi:
   enabled: false
-  
+
   # authorized VOs
   vo:
-  
+
   # generate voms files configMap
   vomses: []
   # - filename: ""
   #   content: |
   #     mymultine
   #     file
-  
+
   # gsi certificates
   cacheCert: {}
   #  cert: ""
@@ -40,7 +39,6 @@ cache:
 
   # Cache specific configuration
   redirHost: xcache-redir-service.default.svc.cluster.local
-  replicas: 1
   cachePath: /data/xrd
   blockSize: 512k
   memGb: 2
@@ -56,11 +54,11 @@ cache:
   persistence:
     enabled: true
     cacheHostPath: /data/xrd
-    volumeClaim: {}
-    #  enabled: false
-    #  type: ""
-    #  name: ""
-    #  size: ""
+    volumeClaim:
+      enabled: false
+      type: ""
+      name: ""
+      size: ""
 
   # TO BE IMPLEMENTED YET
   http:
@@ -96,7 +94,7 @@ redirector:
     type: NodePort
     xrootd:
       port: 1294
-      targetPort: 31294 
+      targetPort: 31294
       nodePort: 31294
     cms:
       port: 1213
@@ -120,7 +118,7 @@ proxy:
   replicas: 1
 
   service:
-    type: NodePort 
+    type: NodePort
     xrootd:
       port: 1394
       targetPort: 31394
