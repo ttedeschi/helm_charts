@@ -81,7 +81,7 @@ spec:
             command:
             - voms-proxy-info
             - --file
-            - /root/gwms_proxy
+            - /root/proxy/gwms_proxy
             - --exists
           initialDelaySeconds: 300
           periodSeconds: 600

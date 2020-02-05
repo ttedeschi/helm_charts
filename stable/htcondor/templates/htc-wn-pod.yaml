@@ -73,7 +73,7 @@ spec:
             #- /cvmfs/spiga.local.repo/test-content
             - voms-proxy-info
             - --file
-            - /root/gwms_proxy
+            - /root/proxy/gwms_proxy
             - -e
           initialDelaySeconds: 300
           periodSeconds: 600
