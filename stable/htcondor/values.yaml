@@ -184,8 +184,8 @@ htcWn:
 # Token Translation service cache configuration
 ttsCache:
   enabled: true
-  image: dodasts/ttscache
-  tag: v1.1.4-dodas
+  image: dodasts/tts-cache 
+  tag:  v0.1.1-k8s
   pullPolicy: IfNotPresent
   replicas: 1
 
