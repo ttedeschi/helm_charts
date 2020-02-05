@@ -31,6 +31,9 @@ spec:
                 {{- end }}
             topologyKey: kubernetes.io/hostname
         {{- end }}
+      {{- if .Values.ttsCache.enabled }}
+      serviceAccountName: tts-account
+      {{- end }}
       containers:
       {{- if .Values.ttsCache.enabled }}
       - name: tts
@@ -44,6 +47,9 @@ spec:
           limits:
             memory: "500M"
             cpu: "100m"
+        volumeMounts:
+          - name: proxydir
+            mountPath: /root/proxy
       {{- end }}
       - name: wn
         imagePullPolicy: {{ .Values.htcWn.pullPolicy }}
@@ -94,8 +100,15 @@ spec:
           mountPath: /etc/cvmfs/SITECONF/{{ .path }}
 {{- end }}
 {{- end }}
-
+{{- if .Values.ttsCache.enabled }}
+          - name: proxydir
+            mountPath: /root/proxy
+{{- end }}
       volumes:
+{{- if .Values.ttsCache.enabled }}
+      - name: proxydir
+        emptyDir: {}
+{{- end }}
 {{- if .Values.nfs.enabled }}
       - name: nfs
         persistentVolumeClaim:

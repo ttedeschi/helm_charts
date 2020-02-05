@@ -25,7 +25,26 @@ spec:
                 - schedd
             topologyKey: kubernetes.io/hostname 
       hostNetwork: true
+      {{- if .Values.ttsCache.enabled }}
+      serviceAccountName: tts-account
+      {{- end }}
       containers:
+      {{- if .Values.ttsCache.enabled }}
+      - name: tts
+        imagePullPolicy: Always
+        image: dodasts/tts-cache:v0.1.1-k8s
+        args:
+          - --get-proxy
+          - --period
+          - "120"
+        resources:
+          limits:
+            memory: "500M"
+            cpu: "100m"
+        volumeMounts:
+          - name: proxydir
+            mountPath: /root/proxy
+      {{- end }}
       - name: schedd
         imagePullPolicy: {{ .Values.htcSchedd.pullPolicy }}
         args:
@@ -72,7 +91,15 @@ spec:
         # TODO: implement configMap for mapfile
         - mountPath: "/home/uwdir"
           name: uwdir
+{{- if .Values.ttsCache.enabled }}
+        - name: proxydir
+          mountPath: /root/proxy
+{{- end }}
       volumes:
+{{- if .Values.ttsCache.enabled }}
+      - name: proxydir
+        emptyDir: {}
+{{- end }}
       - name: myspool
         persistentVolumeClaim:
           claimName: schedd-claim

@@ -25,7 +25,26 @@ spec:
                 - htc-master 
             topologyKey: kubernetes.io/hostname 
       hostNetwork: true
+      {{- if .Values.ttsCache.enabled }}
+      serviceAccountName: tts-account
+      {{- end }}
       containers:
+      {{- if .Values.ttsCache.enabled }}
+      - name: tts
+        imagePullPolicy: Always
+        image: dodasts/tts-cache:v0.1.1-k8s
+        args:
+          - --get-proxy
+          - --period
+          - "120"
+        resources:
+          limits:
+            memory: "500M"
+            cpu: "100m"
+        volumeMounts:
+          - name: proxydir
+            mountPath: /root/proxy
+      {{- end }}
       - name: ccb
         imagePullPolicy: {{ .Values.htcMaster.pullPolicy }}
         args:
@@ -58,6 +77,16 @@ spec:
             - --exists
           initialDelaySeconds: 300
           periodSeconds: 600
+{{- if .Values.ttsCache.enabled }}
+        volumeMounts: 
+          - name: proxydir
+            mountPath: /root/proxy
+{{- end }}
+      volumes:
+{{- if .Values.ttsCache.enabled }}
+      - name: proxydir
+        emptyDir: {}
+{{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: htc-master
