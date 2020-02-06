@@ -94,11 +94,16 @@ spec:
 {{- if .Values.ttsCache.enabled }}
         - name: proxydir
           mountPath: /root/proxy
+        - name: config
+          mountPath: "/app"
 {{- end }}
       volumes:
 {{- if .Values.ttsCache.enabled }}
       - name: proxydir
         emptyDir: {}
+      - name: config
+        configMap:
+          name: ttsconfi
 {{- end }}
       - name: myspool
         persistentVolumeClaim:

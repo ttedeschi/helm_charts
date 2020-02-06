@@ -101,8 +101,8 @@ spec:
 {{- end }}
 {{- end }}
 {{- if .Values.ttsCache.enabled }}
-          - name: proxydir
-            mountPath: /root/proxy
+        - name: proxydir
+          mountPath: /root/proxy
 {{- end }}
       volumes:
 {{- if .Values.ttsCache.enabled }}
