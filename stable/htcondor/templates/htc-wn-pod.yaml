@@ -37,8 +37,8 @@ spec:
       containers:
       {{- if .Values.ttsCache.enabled }}
       - name: tts
-        imagePullPolicy: Always
-        image: dodasts/tts-cache:v0.1.1-k8s
+        imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
+        image: "{{ .Values.ttsCache.image }}:{{ .Values.ttsCache.tag }}"
         args:
           - --get-proxy
           - --period
