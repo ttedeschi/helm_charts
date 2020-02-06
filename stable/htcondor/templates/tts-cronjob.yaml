@@ -4,33 +4,31 @@ kind: Job
 metadata:
   name: tts-init
 spec:
-  jobTemplate:
+  backoffLimit: 2
+  template:
     spec:
-      backoffLimit: 2
-      template:
-        spec:
-          containers:
-            - name: tts
-              imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
-              image: "{{ .Values.ttsCache.image }}:{{ .Values.ttsCache.tag }}"
-              args:
-                - --cache-certs
-              volumeMounts:
-                - name: config
-                  mountPath: "/app"
-              resources:
-                limits:
-                  memory: "500M"
-                  cpu: "100m"
-                requests:
-                  memory: "100M"
-                  cpu: "100m"
-          volumes:
+      containers:
+        - name: tts
+          imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
+          image: "{{ .Values.ttsCache.image }}:{{ .Values.ttsCache.tag }}"
+          args:
+            - --cache-certs
+          volumeMounts:
             - name: config
-              configMap:
-                name: ttsconfig
-          restartPolicy: Never
-          serviceAccountName: tts-account
+              mountPath: "/app"
+          resources:
+            limits:
+              memory: "500M"
+              cpu: "100m"
+            requests:
+              memory: "100M"
+              cpu: "100m"
+      volumes:
+        - name: config
+          configMap:
+            name: ttsconfig
+      restartPolicy: Never
+      serviceAccountName: tts-account
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
