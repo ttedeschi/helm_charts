@@ -37,6 +37,8 @@ spec:
           - --get-proxy
           - --period
           - "120"
+          - "--config"
+          - "/app/.config.yaml"
         resources:
           limits:
             memory: "500M"
