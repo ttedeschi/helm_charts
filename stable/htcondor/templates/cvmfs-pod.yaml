@@ -78,7 +78,7 @@ spec:
           name: configd
         {{- if .Values.cvmfs.privKey }}
         {{- range   .Values.cvmfs.privKey }}
-        - mountPath: "/etc/cvmfs/keys/{{ .path }}"
+        - mountPath: "/etc/cvmfs/{{ .path }}"
           name: {{ .name }}
         {{- end }}
         {{- end }}
@@ -96,7 +96,7 @@ spec:
       - name: {{ .name }}
         secret:
           secretName: {{ .name }}
-          defaultMode: 511
+          defaultMode: 256
       {{- end}}
       {{- end}}
         # TODO CONFIGMAP
