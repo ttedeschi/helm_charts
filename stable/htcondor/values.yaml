@@ -224,6 +224,7 @@ nfs:
   # Put here the nfs master address
   server: DUMMY
   path: "/"
+  mountPath: "/"
 
 # CVMFS mount on slave: configuration
 cvmfs:

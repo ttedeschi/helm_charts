@@ -89,7 +89,7 @@ spec:
         volumeMounts:
 {{- if .Values.nfs.enabled }}
         - name: nfs
-          mountPath: "/mnt"
+          mountPath: "{{ .Values.nfs.mountPath }}"
 {{- end }}
 {{- if .Values.cvmfs.enabled }}
         - name: cvmfs
