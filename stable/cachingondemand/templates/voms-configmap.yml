@@ -1,4 +1,4 @@
-{{- if .Values.gsi.vomses }}
+{{- if and .Values.gsi.vomses .Values.gsi.enabled}}
 
 apiVersion: v1
 kind: ConfigMap
