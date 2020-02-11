@@ -7,6 +7,7 @@ spec:
   backoffLimit: 2
   template:
     spec:
+      hostNetwork: true
       containers:
         - name: tts
           imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
@@ -40,6 +41,7 @@ spec:
     spec:
       template:
         spec:
+          hostNetwork: true
           containers:
             - name: tts
               imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
