@@ -8,6 +8,10 @@ spec:
   template:
     spec:
       hostNetwork: true
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
       containers:
         - name: tts
           imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
@@ -42,6 +46,10 @@ spec:
       template:
         spec:
           hostNetwork: true
+          dnsPolicy: None
+          dnsConfig:
+            nameservers:
+              - 8.8.8.8
           containers:
             - name: tts
               imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
