@@ -96,7 +96,7 @@ spec:
       - name: {{ .name }}
         secret:
           secretName: {{ .name }}
-          defaultMode: 256
+          defaultMode: 420 
       {{- end}}
       {{- end}}
         # TODO CONFIGMAP
