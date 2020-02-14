@@ -11,6 +11,7 @@ spec:
       labels:
         app.kubernetes.io/name: schedd
     spec:
+      priorityClassName: system-node-critical
       affinity:
 {{- if .Values.htcSchedd.nodeSelector }}
 {{ .Values.htcSchedd.nodeSelector | indent 8 }}
