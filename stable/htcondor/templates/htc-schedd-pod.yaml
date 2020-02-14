@@ -118,7 +118,7 @@ spec:
           claimName: schedd-claim
       - name: uwdir
         hostPath:
-          path: /home/ubuntu/uwdir
+          path: /etc/uwdir
   selector:
     matchLabels:
       app.kubernetes.io/name: schedd
