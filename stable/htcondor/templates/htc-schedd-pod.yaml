@@ -40,7 +40,7 @@ spec:
           - "--config"
           - "/app/.config.yaml"
         resources:
-          limits:
+          requests:
             memory: "500M"
             cpu: "100m"
         volumeMounts:
@@ -48,6 +48,10 @@ spec:
             mountPath: /root/proxy
       {{- end }}
       - name: schedd
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "100m"
         imagePullPolicy: {{ .Values.htcSchedd.pullPolicy }}
         args:
         - schedd 
@@ -112,7 +116,7 @@ spec:
           claimName: schedd-claim
       - name: uwdir
         hostPath:
-          path: /tmp/uwdir
+          path: /home/ubuntu/uwdir
   selector:
     matchLabels:
       app.kubernetes.io/name: schedd
