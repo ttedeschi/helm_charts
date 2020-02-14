@@ -46,6 +46,8 @@ spec:
         volumeMounts:
           - name: proxydir
             mountPath: /root/proxy
+          - mountPath: "/home/uwdir"
+            name: uwdir
       {{- end }}
       - name: schedd
         resources:
