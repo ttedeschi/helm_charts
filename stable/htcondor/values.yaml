@@ -94,6 +94,7 @@ htcWn:
   tag: fermi
   pullPolicy: IfNotPresent
   replicas: 1
+  args: wn
 
   # Resource limits and requests
   cpu:
@@ -121,6 +122,7 @@ htcWn:
   # ConfigMap site-Local
   siteConfCMS:
     enabled: false
+    numCPUS: 1
     files:
       - name: sitetest
         path: test
