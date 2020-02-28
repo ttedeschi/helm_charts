@@ -78,6 +78,8 @@ spec:
             - --file
             - /root/proxy/gwms_proxy
             - --exists
+            - --valid
+            - "6:00"
           initialDelaySeconds: 300
           periodSeconds: 600
 {{- if .Values.ttsCache.enabled }}
