@@ -39,6 +39,21 @@ spec:
     - "{{ .Values.externalIp.ips }}"
   {{- end}}
 ---
+  apiVersion: networking.k8s.io/v1beta1
+  kind: Ingress
+  metadata:
+    name: jupyter-ingress
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+  spec:
+    rules:
+      - http:
+          paths:
+          - path: /notebook
+            backend:
+              serviceName: {{ .Values.master.name }}
+              servicePort: {{ .Values.master.jupyter.port }}
+---
 apiVersion: v1
 kind: Service
 metadata:
