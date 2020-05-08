@@ -231,13 +231,13 @@ nfs:
 # CVMFS mount on slave: configuration
 cvmfs:
   enabled: false
-  image: cloudpg/cvmfs
+  image: dodasts/cvmfs
   tag: k8s
   pullPolicy: IfNotPresent
   replicas: 1
 
   # List of repos to be mounted
-  repoList: cms.cern.ch oasis.cern.ch
+  repoList: cms.cern.ch  grid.cern.ch  oasis.cern.ch  singularity.opensciencegrid.org 
 
   privKey: []
   #  - name: spiga

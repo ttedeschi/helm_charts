@@ -55,6 +55,11 @@ spec:
       {{- end }}
       - name: wn
         imagePullPolicy: {{ .Values.htcWn.pullPolicy }}
+        securityContext:
+          capabilities:
+            add:
+              - SYS_ADMIN
+          privileged: true
         args:
         - "{{ .Values.htcWn.args }}"
         env:
@@ -77,7 +82,7 @@ spec:
             #- /cvmfs/spiga.local.repo/test-content
             - voms-proxy-info
             - --file
-            - /root/proxy/gwms_proxy
+            - /tmp/proxy/gwms_proxy
             - -e
             - --valid
             - "6:00"
@@ -91,6 +96,8 @@ spec:
             memory: "{{ .Values.htcWn.ram.request }}"
             cpu: "{{ .Values.htcWn.cpu.request }}"
         volumeMounts:
+        - name: cgroup
+          mountPath: /sys/fs/cgroup
 {{- if .Values.nfs.enabled }}
         - name: nfs
           mountPath: "{{ .Values.nfs.mountPath }}"
@@ -108,7 +115,7 @@ spec:
 {{- end }}
 {{- if .Values.ttsCache.enabled }}
         - name: proxydir
-          mountPath: /root/proxy
+          mountPath: /tmp/proxy
 {{- end }}
       volumes:
 {{- if .Values.ttsCache.enabled }}
