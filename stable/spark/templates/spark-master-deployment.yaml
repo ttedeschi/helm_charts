@@ -99,13 +99,20 @@ spec:
         component: "{{ .Release.Name }}-{{ .Values.master.component }}"
     spec:
       containers:
-        - name: {{ .Values.master.name }}
+        - args:
+          - echo $(hostname -i) master >> /etc/hosts; /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+          command:
+          - /bin/sh
+          - -c
+          name: {{ .Values.master.name }}
           image: "{{ .Values.master.image }}:{{ .Values.master.imageTag }}"
-          #args: ["master"] 
-          args: ["/opt/spark/bin/spark-class","org.apache.spark.deploy.master.Master", "--ip", "localhost", "--port", "7077", "--webui-port", "8080"]
+          imagePullPolicy: Always
+          name: master
           ports:
-            - containerPort: {{ .Values.master.containerPort }}
-            - containerPort: {{ .Values.webUi.containerPort }}
+          - containerPort: {{ .Values.master.containerPort }}
+            protocol: TCP
+          - containerPort: {{ .Values.webUi.containerPort }}
+            protocol: TCP
           resources:
             requests:
               cpu: "{{ .Values.master.cpu }}"
@@ -119,6 +126,8 @@ spec:
             value: {{ .Values.master.servicePort | quote }}
           - name: SPARK_MASTER_WEBUI_PORT
             value: {{ .Values.webUi.containerPort | quote }}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
         - name: jupyter
           imagePullPolicy: Always
           command: ["start.sh"]

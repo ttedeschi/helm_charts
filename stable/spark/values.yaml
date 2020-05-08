@@ -17,30 +17,28 @@ clusterRoleBinding:
 
 # ExternalIps to be used for service exposition
 externalIp:
-    enabled: true
+    enabled: false 
     ips: 192.168.65.3
 
 # Spark master deployment and service configuration values
 master:
     name: master
     namespace: default
-    image: dodasts/spark-k8s-py
-    imageTag: v2.0.0-rc1
+    image: dodasts/spark
+    imageTag: v2.4.5
     replicas: 1
     component: spark-master
     cpu: 100m
     memory: 1024Mi
     servicePort: 7077
     containerPort: 7077
-    # Set Master JVM memory. Default 1g
-    # DaemonMemory: 1g
     serviceType: NodePort
     jupyter:
         nodePort: 30888
         token: testme
         port: 8888
         image: dodasts/pyspark-notebook
-        tag: v2.0.0-rc1
+        tag: v2.4.5
 
 
 # WebUi service configuration values
