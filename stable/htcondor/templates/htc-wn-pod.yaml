@@ -98,6 +98,10 @@ spec:
         volumeMounts:
         - name: cgroup
           mountPath: /sys/fs/cgroup
+{{- if .Values.htcWn.persistentVolume.pvc.name }}
+        - name: "{{ .Values.htcWn.persistentVolume.pvc.name }}"
+          mountPath: "{{ .Values.htcWn.persistentVolume.pvc.mountPath }}"
+{{- end }}
 {{- if .Values.nfs.enabled }}
         - name: nfs
           mountPath: "{{ .Values.nfs.mountPath }}"

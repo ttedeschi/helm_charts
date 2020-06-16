@@ -82,12 +82,17 @@ spec:
             - "6:00"
           initialDelaySeconds: 300
           periodSeconds: 600
-{{- if .Values.ttsCache.enabled }}
         volumeMounts: 
+          - mountPath: "/etc/condor/config.d"
+            name: configd
+{{- if .Values.ttsCache.enabled }}
           - name: proxydir
             mountPath: /root/proxy
 {{- end }}
       volumes:
+      - name: configd
+        configMap:
+          name: ccbconfigd
 {{- if .Values.ttsCache.enabled }}
       - name: proxydir
         emptyDir: {}

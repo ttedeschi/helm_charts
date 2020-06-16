@@ -99,6 +99,8 @@ spec:
         volumeMounts:
         - mountPath: "{{ .Values.htcSchedd.persistence.mountPath }}"
           name: myspool
+        - mountPath: "/etc/condor/config.d"
+          name: configd
         # TODO: implement configMap for mapfile
         - mountPath: "/home/uwdir"
           name: uwdir
@@ -119,6 +121,9 @@ spec:
       - name: myspool
         persistentVolumeClaim:
           claimName: schedd-claim
+      - name: configd
+        configMap:
+          name: scheddconfigd
       - name: uwdir
         hostPath:
           path: /etc/uwdir

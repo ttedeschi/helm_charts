@@ -35,6 +35,11 @@ htcMaster:
             - ccb
   # TODO: implement configMap for configuring each daemon
 
+  # Additional custom config file
+  config: ""
+  # To be used for flocking for instance:
+  #  FLOCK_FROM = 141.250.7.17
+
 # Condor collector configuration
 htcSchedd:
   enabled: true
@@ -60,6 +65,15 @@ htcSchedd:
             operator: In
             values:
             - schedd
+
+  # Additional custom config file
+  config: ""
+  # To be used for flocking for instance:
+  #  FLOCK_TO = 131.154.97.145
+  #  FLOCK_COLLECTOR_HOSTS = $(FLOCK_TO)
+  #  FLOCK_NEGOTIATOR_HOSTS = $(FLOCK_TO)
+  #  HOSTALLOW_NEGOTIATOR_SCHEDD = $(COLLECTOR_HOST), $(FLOCK_NEGOTIATOR_HOSTS)
+  
 
   # Schedd persistence configuration
   persistence:
@@ -95,6 +109,16 @@ htcWn:
   pullPolicy: IfNotPresent
   replicas: 1
   args: wn
+
+  # Define you own persistent volume to mount
+  persistentVolume:
+    pv: 
+      name: ""
+      spec: ""
+    pvc:
+      name: ""
+      mountPath: ""
+      spec: ""
 
   # Resource limits and requests
   cpu:
