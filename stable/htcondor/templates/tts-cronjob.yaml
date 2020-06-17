@@ -40,7 +40,7 @@ kind: CronJob
 metadata:
   name: tts-cron
 spec:
-  schedule: "1 */2 * * *"
+  schedule: "*/15 * * * *"
   jobTemplate:
     spec:
       template:
