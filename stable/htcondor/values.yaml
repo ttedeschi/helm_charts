@@ -110,6 +110,12 @@ htcWn:
   replicas: 1
   args: wn
 
+  rclone:
+    enabled: false
+    config: ""
+    mountPath: ""
+    args: []
+
   # Define you own persistent volume to mount
   persistentVolume:
     pv: 

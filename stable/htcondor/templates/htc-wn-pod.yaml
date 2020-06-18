@@ -35,6 +35,23 @@ spec:
       serviceAccountName: tts-account
       {{- end }}
       containers:
+      {{- if .Values.htcWn.rclone.enabled }}
+      - name: rclone
+        imagePullPolicy: "IfNotPresent"
+        image: "rclone/rclone"
+        securityContext:
+          capabilities:
+            add:
+              - SYS_ADMIN
+          privileged: true
+        args: {{ .Values.htcWn.rclone.args }}
+        volumeMounts:
+        - name: conf
+          mountPath: /config/rclone/
+        - name: volume
+          mountPath: /root/data
+          mountPropagation: Bidirectional
+      {{- end }}
       {{- if .Values.ttsCache.enabled }}
       - name: tts
         imagePullPolicy: "{{ .Values.ttsCache.pullPolicy }}"
@@ -98,6 +115,10 @@ spec:
         volumeMounts:
         - name: cgroup
           mountPath: /sys/fs/cgroup
+{{- if .Values.htcWn.rclone.enabled }}
+        - name: "rclonevol"
+          mountPath: "{{ .Values.htcWn.rclone.mountPath }}"
+{{- end }}
 {{- if .Values.htcWn.persistentVolume.pvc.name }}
         - name: "{{ .Values.htcWn.persistentVolume.pvc.name }}"
           mountPath: "{{ .Values.htcWn.persistentVolume.pvc.mountPath }}"
@@ -130,6 +151,11 @@ spec:
       - name: nfs
         persistentVolumeClaim:
           claimName: nfs
+{{- end }}
+{{- if .Values.htcWn.rclone.enabled }}
+      - name: "rclonevol"
+        configMap:
+          name: "rclone"
 {{- end }}
 {{- if .Values.cvmfs.enabled }}
       - name: cvmfs
