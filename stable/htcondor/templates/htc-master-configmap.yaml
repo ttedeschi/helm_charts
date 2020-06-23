@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: ccbconfigd 
 data:
-    01_DODAS_Custom: |
-{{ .Values.htcMaster.config | indent 4 }
+  01_DODAS_Custom: |
+{{ .Values.htcMaster.config | indent 4 }}
