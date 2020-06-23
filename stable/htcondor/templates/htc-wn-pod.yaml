@@ -156,8 +156,8 @@ spec:
         persistentVolumeClaim:
           claimName: nfs
 {{- end }}
-{{- if .Values.persistentVolume.pv.name }}
-      - name: {{ .Values.persistentVolume.pv.name }}
+{{- if .Values.persistentVolume.pvc.name }}
+      - name: {{ .Values.persistentVolume.pvc.name }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistentVolume.pvc.name }}
 {{- end }}
