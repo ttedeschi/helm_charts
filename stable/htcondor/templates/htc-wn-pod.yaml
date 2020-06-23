@@ -156,10 +156,10 @@ spec:
         persistentVolumeClaim:
           claimName: nfs
 {{- end }}
-{{- if .Values.persistentVolume.pvc.name }}
-      - name: {{ .Values.persistentVolume.pvc.name }}
+{{- if .Values.htcWn.persistentVolume.pvc.name  }}
+      - name: {{ .Values.htcWn.persistentVolume.pvc.name  }}
         persistentVolumeClaim:
-          claimName: {{ .Values.persistentVolume.pvc.name }}
+          claimName: {{ .Values.htcWn.persistentVolume.pvc.name  }}
 {{- end }}
 {{- if .Values.htcWn.rclone.enabled }}
       - name: "rclonevol"
