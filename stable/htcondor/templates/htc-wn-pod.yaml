@@ -143,6 +143,10 @@ spec:
           mountPath: /tmp/proxy
 {{- end }}
       volumes:
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
 {{- if .Values.ttsCache.enabled }}
       - name: proxydir
         emptyDir: {}
@@ -151,6 +155,11 @@ spec:
       - name: nfs
         persistentVolumeClaim:
           claimName: nfs
+{{- end }}
+{{- if .Values.persistentVolume.pv.name }}
+      - name: {{ .Values.persistentVolume.pv.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolume.pvc.name }}
 {{- end }}
 {{- if .Values.htcWn.rclone.enabled }}
       - name: "rclonevol"
