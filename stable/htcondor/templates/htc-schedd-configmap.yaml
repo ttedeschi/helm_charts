@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: scheddconfigd 
 data:
-    01_DODAS_Custom: |
+  01_DODAS_Custom: |
 {{ .Values.htcSchedd.config | indent 4 }}
