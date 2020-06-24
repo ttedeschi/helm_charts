@@ -33,4 +33,4 @@ metadata:
   name: wnconfigd 
 data:
   01_DODAS_Custom: |
-{{ .Values.htcMaster.config | indent 4 }}
+{{ .Values.htcWn.config | indent 4 }}

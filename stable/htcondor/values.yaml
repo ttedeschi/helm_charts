@@ -149,6 +149,12 @@ htcWn:
             - ccb
             - schedd
 
+  # Additional custom config file
+  config: ""
+  # e.g. classAds
+  # MachineOwner = "chemistry"
+  # STARTD_ATTRS = $(STARTD_ATTRS) MachineOwner
+
   # ConfigMap site-Local
   siteConfCMS:
     enabled: false
