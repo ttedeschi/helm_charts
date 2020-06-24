@@ -115,6 +115,8 @@ spec:
         volumeMounts:
         - name: cgroup
           mountPath: /sys/fs/cgroup
+        - mountPath: "/etc/condor/config.d"
+          name: configd
 {{- if .Values.htcWn.rclone.enabled }}
         - name: "rclonevol"
           mountPath: "{{ .Values.htcWn.rclone.mountPath }}"
@@ -147,6 +149,9 @@ spec:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      - name: configd
+        configMap:
+          name: wnconfigd
 {{- if .Values.ttsCache.enabled }}
       - name: proxydir
         emptyDir: {}
@@ -159,7 +164,7 @@ spec:
 {{- if .Values.htcWn.persistentVolume.pvc.name  }}
       - name: {{ .Values.htcWn.persistentVolume.pvc.name  }}
         persistentVolumeClaim:
-          claimName: {{ .Values.htcWn.persistentVolume.pvc.name  }}
+          claimName: {{ .Values.htcWn.persistentVolume.pvc.name }}
 {{- end }}
 {{- if .Values.htcWn.rclone.enabled }}
       - name: "rclonevol"

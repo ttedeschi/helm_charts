@@ -24,3 +24,13 @@ metadata:
 data:
   rclone.conf: {{ .Values.htcWn.rclone.config }}
 {{- end }}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wnconfigd 
+data:
+  01_DODAS_Custom: |
+{{ .Values.htcMaster.config | indent 4 }}
