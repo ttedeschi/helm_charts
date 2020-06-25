@@ -30,7 +30,7 @@ stringData:
 {{- end }}
 
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet 
 metadata:
   name: cvmfs
   labels:
