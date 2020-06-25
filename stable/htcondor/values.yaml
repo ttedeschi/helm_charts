@@ -270,7 +270,6 @@ cvmfs:
   image: dodasts/cvmfs
   tag: k8s
   pullPolicy: IfNotPresent
-  replicas: 1
 
   # List of repos to be mounted
   repoList: cms.cern.ch  grid.cern.ch  oasis.cern.ch  singularity.opensciencegrid.org 

@@ -103,5 +103,4 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: cvmfs
-  replicas: {{ .Values.cvmfs.replicas }}
 {{- end }}
