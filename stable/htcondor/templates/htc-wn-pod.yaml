@@ -99,7 +99,7 @@ spec:
             #- /cvmfs/spiga.local.repo/test-content
             - voms-proxy-info
             - --file
-            - /tmp/proxy/gwms_proxy
+            - /root/proxy/gwms_proxy
             - -e
             - --valid
             - "6:00"
@@ -142,7 +142,7 @@ spec:
 {{- end }}
 {{- if .Values.ttsCache.enabled }}
         - name: proxydir
-          mountPath: /tmp/proxy
+          mountPath: /root/proxy
 {{- end }}
       volumes:
       - name: cgroup
