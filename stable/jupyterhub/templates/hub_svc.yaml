@@ -10,5 +10,5 @@ spec:
       targetPort: 8888
       nodePort: {{ .Values.hub.port }}
   selector:
-    component: "hub"
+    app: "hub"
   type: NodePort
