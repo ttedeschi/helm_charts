@@ -25,8 +25,10 @@ spec:
               value: "http://{{ .Values.hub.host }}:{{ .Values.hub.port }}/hub/oauth_callback"
             - name: OAUTH_ENDPOINT
               value: "{{ .Values.iam.endpoint }}"
-            - name: S3_ENABLED
-              value: "{{ .Values.s3.enabled }}"
+            - name: S3_ENDPOINT
+              value: "{{ .Values.s3.endpoint }}"
+            - name: S3_BUCKET
+              value: "{{ .Values.s3.bucket }}"
           image: "{{ .Values.hub.image }}"
           ports:
           - containerPort: 8888
