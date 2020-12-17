@@ -90,7 +90,7 @@ spec:
           type: string
           jsonPath: ".status.currentState"
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: minio-operator-role
@@ -165,7 +165,7 @@ metadata:
   namespace: default
 ---
 kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: minio-operator-binding
 roleRef:
