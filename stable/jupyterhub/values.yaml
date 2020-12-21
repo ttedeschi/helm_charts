@@ -8,7 +8,7 @@ iam:
 hub:
     host: localhost
     port: 30888
-    image: dodasts/jupyter-hub:v3.0.0
+    image: dodasts/jupyter-hub:v3.0.1
 
 s3:
     endpoint: https://minio.cloud.infn.it/minio
